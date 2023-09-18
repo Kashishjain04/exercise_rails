@@ -1,22 +1,22 @@
 <div id="<%= dom_id appointment %>">
   <p>
     <strong>Doctor:</strong>
-    <%= appointment.doctor_id %>
+    <%= appointment.doctor.name %>
   </p>
 
   <p>
     <strong>User:</strong>
-    <%= appointment.user_id %>
+    <%= appointment.user.name %>
   </p>
 
   <p>
-    <strong>Date time:</strong>
+    <strong>Appointment time:</strong>
     <%= appointment.date_time %>
   </p>
 
   <p>
-    <strong>Currency rates:</strong>
-    <%= appointment.currency_rates %>
+    <strong>Amount:</strong>
+    <%= appointment.amount %>
   </p>
 
 </div>

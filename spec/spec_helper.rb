@@ -3,6 +3,7 @@ RSpec.shared_context "Global helpers" do
   let(:user2) { create(:user, name: 'UserTwo', email: 'two@user.com') }
   let(:doctor1) { create(:doctor, name: 'DoctorOne', image: '/doctors/doctor-1.png') }
   let(:doctor2) { create(:doctor, name: 'DoctorTwo', image: '/doctors/doctor-2.png') }
+  let(:appointment1) { create(:appointment) }
 end
 
 RSpec.configure do |config|

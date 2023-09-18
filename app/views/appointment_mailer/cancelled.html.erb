@@ -1,0 +1,17 @@
+<h1>Medi App</h1>
+
+<h3>Dear <%= @appointment.user.name %>,</h3>
+<p>
+  Your appointment #<%= @appointment.id %> is cancelled. Refer below for more details.
+</p>
+
+<table border="1px">
+  <tr>
+    <th style="text-align: left">Doctor Name:</th>
+    <td><%= @appointment.doctor.name %></td>
+  </tr>
+  <tr>
+    <th style="text-align: left">Appointment Time:</th>
+    <td><%= parse_time(@appointment.date_time) %></td>
+  </tr>
+</table>

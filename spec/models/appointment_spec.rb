@@ -29,44 +29,44 @@ RSpec.describe Appointment, type: :model do
 
   describe "validations" do
     context "presence" do
-      it "should validate presence of doctor" do
+      it "validates presence of doctor" do
         expect { Appointment.create!(**valid_params.except(:doctor_id)) }
           .to raise_error(ActiveRecord::RecordInvalid)
       end
-      it "should validate presence of user" do
+      it "validates presence of user" do
         expect { Appointment.create!(**valid_params.except(:user_id)) }
           .to raise_error(ActiveRecord::RecordInvalid)
       end
-      it "should validate presence of date_time" do
+      it "validates presence of date_time" do
         expect { Appointment.create!(**valid_params.except(:date_time)) }
           .to raise_error(ActiveRecord::RecordInvalid)
       end
-      it "should validate presence of amount" do
+      it "validates presence of amount" do
         expect { Appointment.create!(**valid_params.except(:amount)) }
           .to raise_error(ActiveRecord::RecordInvalid)
       end
-      it "should validate presence of currency" do
+      it "validates presence of currency" do
         expect { Appointment.create!(**valid_params.except(:currency)) }
           .to raise_error(ActiveRecord::RecordInvalid)
       end
     end
 
-    it "should throw error for past date_time" do
+    it "throws an error for past date_time" do
       expect { Appointment.create!(**invalid_params[0]) }
         .to raise_error(ActiveRecord::RecordInvalid)
     end
 
-    it "should throw error if date_time is not in doctor's slots" do
+    it "throws an error if date_time is not in doctor's slots" do
       expect { Appointment.create!(**invalid_params[1]) }
         .to raise_error(ActiveRecord::RecordInvalid)
     end
 
-    it "should throw error if invalid amount is passed" do
+    it "throws an error if invalid amount is passed" do
       expect { Appointment.create!(**valid_params, amount: -1) }
         .to raise_error(ActiveRecord::RecordInvalid)
     end
 
-    it "should throw error if invalid currency is passed" do
+    it "throws an error if invalid currency is passed" do
       expect { Appointment.create!(**valid_params, currency: "CAD") }
         .to raise_error(ActiveRecord::RecordInvalid)
     end
