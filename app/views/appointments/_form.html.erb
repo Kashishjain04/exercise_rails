@@ -1,0 +1,24 @@
+<%= form_with(model: appointment) do |form| %>
+  <%= form.hidden_field :doctor_id, value: params[:doctor_id] %>
+  <% if appointment.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+
+      <ul>
+        <% appointment.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div data-appointment-target="slotForm" class="slot-form mx-auto gap-3 d-none">
+    <%= render partial: 'slot_form', locals: { form: form } %>
+  </div>
+  <div data-appointment-target="userForm" class="user-form mx-auto gap-3 d-none">
+    <%= render partial: 'user_form', locals: { form: form } %>
+  </div>
+  <div data-appointment-target="processingPayment" class="vw-100 vh-100 position-fixed top-0 start-0 d-none">
+    <%= render partial: 'processing_payment' %>
+  </div>
+<% end %>

@@ -1,0 +1,5 @@
+<%= turbo_stream_from(:appointment) %>
+<p style="color: green"><%= notice %></p>
+<div data-controller="appointment" id="appointment_form">
+  <%= render "form", appointment: @appointment %>
+</div>

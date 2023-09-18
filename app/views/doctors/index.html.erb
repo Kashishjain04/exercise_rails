@@ -1,0 +1,15 @@
+<p style="color: green"><%= notice %></p>
+
+<div id="doctors" class="mx-auto doctor-container d-flex flex-column d-sm-grid grid row-gap-3 row-gap-sm-4 column-gap-5">
+  <div class="g-col-12">
+    <div class="d-flex col-sm-5 align-items-center ps-0 gap-2 mt-5 mb-1">
+      <%= image_tag 'icons/stethoscope', alt: 'Stethoscope', height: 31 %>
+      <p class="my-0 fs-5">My Doctors</p>
+    </div>
+  </div>
+  <% @doctors.each do |doctor| %>
+    <%= render doctor %>
+  <% end %>
+</div>
+
+<%#= link_to "New doctor", new_doctor_path %>

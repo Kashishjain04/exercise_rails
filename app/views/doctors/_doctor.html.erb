@@ -1,0 +1,22 @@
+<div id="<%= dom_id doctor %>"
+     class="doctor g-col-12 g-col-sm-6 bg-white rounded-3 border border-light">
+  <div class="d-flex align-items-center column-gap-3">
+    <%= image_tag doctor.image, alt: doctor.name, class: 'rounded-2' %>
+    <div class="d-flex flex-column row-gap-lg-1">
+      <h1 class="fw-semibold lh-sm fs-6 mb-0"><%= doctor.name %></h1>
+      <p class="fw-light fs-7 text-secondary mb-0"><%= doctor.address %></p>
+    </div>
+  </div>
+  <div class="d-flex align-items-center column-gap-sm-3 justify-content-between mt-1">
+    <p class="text-secondary fs-7 fw-light lh-sm mb-0">
+      <% if !doctor.next_available_today.nil? %>
+        <span class="fw-semibold text-success">Next Available</span>
+        - <%= doctor.next_available_today %>
+      <% else %>
+        <span class="fw-semibold text-danger">Not Available Today</span>
+      <% end %>
+    </p>
+    <%= link_to 'Book Visit', new_appointment_path(doctor_id: doctor),
+                class: "btn btn-primary rounded-2 fs-7 fw-semibold py-2 px-4" %>
+  </div>
+</div>

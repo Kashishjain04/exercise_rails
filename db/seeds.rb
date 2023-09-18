@@ -1,7 +1,20 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+Doctor.delete_all
+Doctor.create!([
+                 {
+                   name: "Neha Kakkar",
+                   image: "doctors/doctor-1.png",
+                   address: "Jay Nagar, 4th Block",
+                 },
+                 {
+                   name: "Rhea Mhatre",
+                   image: "doctors/doctor-2.png",
+                   address: "HSR Layout",
+                 }
+               ])
+
+User.delete_all
+User.create!({
+               name: 'Kashish Dreamspring',
+               email: 'kjain@dreamspring.org',
+               preferred_currency: 'INR'
+             })

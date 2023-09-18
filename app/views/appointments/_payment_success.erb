@@ -1,0 +1,51 @@
+<%= turbo_stream.replace('appointment_form') do %>
+  <div class="payment-success mx-auto">
+    <div class="card py-4 border-0 bg-white">
+      <%= image_tag 'icons/congratulations',
+                    alt: 'Congratulations',
+                    class: 'card-img-top',
+                    height: 45 %>
+      <div class="card-body">
+        <h4 class="card-title mb-4 text-success text-center fw-bold">Congratulations</h4>
+        <h6 class="h6 card-subtitle mb-2 text-center text-body-secondary">Appointment Booked</h6>
+        <p class="card-text fs-4 fw-bold text-primary text-center">
+          <%= image_tag 'icons/calendar_light', alt: 'Calendar', size: 27 %>
+          <span class="mx-2">
+            <%= parse_time(appointment.date_time) %>
+        </span>
+        </p>
+        <p class="fs-6 text-center text-secondary">Meeting starts in</p>
+        <div class="countdown d-flex justify-content-center" data-controller="countdown">
+          <div class="d-none" data-countdown-target="dateTime"><%= appointment.date_time %></div>
+
+          <div class="days">
+            <span data-countdown-target="day1">-</span>
+            <span data-countdown-target="day0">-</span>
+            <span class="label">Days</span>
+          </div>
+          <span class="separator">:</span>
+          <div class="hours">
+            <span data-countdown-target="hour1">-</span>
+            <span data-countdown-target="hour0">-</span>
+            <span class="label">Hours</span>
+          </div>
+          <span class="separator">:</span>
+          <div class="minutes">
+            <span data-countdown-target="minute1">-</span>
+            <span data-countdown-target="minute0">-</span>
+            <span class="label">Mins</span>
+          </div>
+          <span class="separator">:</span>
+          <div class="seconds">
+            <span data-countdown-target="second1">-</span>
+            <span data-countdown-target="second0">-</span>
+            <span class="label">Secs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= link_to appointments_path, class: 'btn btn-outline-primary my-4' do %>
+      My Appointments <%= image_tag 'icons/arrow', alt: 'right_arrow', width: 24, class: 'mx-2' %>
+    <% end %>
+  </div>
+<% end %>
