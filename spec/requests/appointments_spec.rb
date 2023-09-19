@@ -61,4 +61,21 @@ RSpec.describe "/appointments", type: :request do
       end
     end
   end
+
+  describe "DELETE /delete" do
+    before do
+      @appointment1 = create(:appointment)
+    end
+    it "deletes a valid appointment" do
+      expect {
+        delete appointment_url @appointment1
+      }.to change(Appointment, :count).by(-1)
+    end
+
+    it "sends email to the user" do
+      expect {
+        delete appointment_url @appointment1
+      }.to have_enqueued_mail(AppointmentMailer, :cancelled)
+    end
+  end
 end

@@ -16,7 +16,7 @@ RSpec.describe AppointmentMailer, type: :mailer do
   end
 
   describe "cancelled" do
-    let(:mail) { AppointmentMailer.cancelled(appointment1) }
+    let(:mail) { AppointmentMailer.cancelled(appointment1.as_json) }
 
     it "renders the headers" do
       expect(mail.subject).to eq("Medi App Appointment Cancelled")

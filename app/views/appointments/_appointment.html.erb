@@ -1,5 +1,5 @@
 <div id="<%= dom_id appointment %>" class="g-col-12 g-col-md-6 fs-7">
-  <div class="bg-white rounded-4 shadow p-2 h-100">
+  <div class="bg-white rounded-4 shadow p-2 h-100 d-flex flex-column">
     <div class="row mb-3 justify-content-start">
       <div class="col-3">
         <%= image_tag appointment.doctor.image,
@@ -12,7 +12,7 @@
         <p class="text-secondary mb-0"><%= appointment.doctor.address %></p>
       </div>
     </div>
-    <h6 class="col-12 mt-4 mb-3 fs-7 text-secondary"><%= t('.your_consultation_details') %></h6>
+    <h6 class="col-12 mb-3 fs-7 text-secondary"><%= t('.your_consultation_details') %></h6>
     <div class="d-flex gap-3 mb-3 justify-content-between fs-7">
       <p
         class="flex-grow-1 pe-2 my-0 d-flex flex-row gap-1
@@ -28,18 +28,25 @@
         <%= parse_time(appointment.date_time, 3) %>
       </p>
     </div>
+    <div class="flex-grow-1"></div>
     <div class="row mb-3 p-3 column-gap-3 justify-content-start text-secondary">
       <div class="col-12 p-0 fs-7 mb-2"><%= t('.download_your_invoice') %></div>
       <%= link_to 'CSV', appointment_path(appointment), class: 'col-3 btn btn-dark py-1 px-0' %>
       <%= link_to 'TXT', appointment_path(appointment), class: 'col-3 btn btn-dark py-1 px-0' %>
       <%= link_to 'PDF', appointment_path(appointment), class: 'col-3 btn btn-dark py-1 px-0' %>
     </div>
-
-    <div class="row mx-1 mt-4 mb-2 px-3 py-2 rounded-3 justify-content-between bg-light">
+    <div class="row mx-1 mb-2 px-3 py-2 rounded-3 justify-content-between bg-light">
       <p class="col-6 m-0 text-start"><%= t('.amount_paid') %></p>
       <p class="col-6 m-0 fw-bold text-primary text-end">
         <%= "#{appointment.currency} #{appointment.amount}/-" %>
       </p>
+    </div>
+
+    <div class="px-1">
+      <%= button_to t('.cancel_appointment'),
+                     appointment, method: :delete,
+                     disabled: appointment.date_time - DateTime.now < 30.minutes,
+                     class: 'col-12 py-1 rounded-3 fs-7 btn btn-outline-danger' %>
     </div>
   </div>
 </div>

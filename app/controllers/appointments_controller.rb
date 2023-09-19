@@ -1,6 +1,7 @@
 class AppointmentsController < ApplicationController
   before_action :set_appointment, only: %i[ show edit update destroy ]
   before_action :set_currency_rates, only: %i[ new create ]
+  before_action :send_cancelled_mail, only: :destroy
 
   # GET /appointments or /appointments.json
   def index
@@ -65,10 +66,9 @@ class AppointmentsController < ApplicationController
 
   # DELETE /appointments/1 or /appointments/1.json
   def destroy
-    @appointment.destroy
-
+    @appointment.destroy!
     respond_to do |format|
-      format.html { redirect_to appointments_url, notice: "Appointment was successfully destroyed." }
+      format.html { redirect_to appointments_url, notice: t('.appointment_cancelled') }
       format.json { head :no_content }
     end
   end
@@ -91,5 +91,9 @@ class AppointmentsController < ApplicationController
       :doctor_id,
       user: [:name, :email, :preferred_currency]
     )
+  end
+
+  def send_cancelled_mail
+    AppointmentMailer.cancelled(@appointment.as_json).deliver_later
   end
 end

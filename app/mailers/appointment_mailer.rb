@@ -17,7 +17,7 @@ class AppointmentMailer < ApplicationMailer
   end
 
   def cancelled(appointment)
-    @appointment = appointment
-    mail to: appointment.user.email
+    @appointment = Appointment.new(**appointment)
+    mail to: @appointment.user.email
   end
 end

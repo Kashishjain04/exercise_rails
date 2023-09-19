@@ -10,9 +10,9 @@ module AppointmentsHelper
 
   def parse_time(date_time, format)
     day_string = if date_time.today?
-                   t('.today')
+                   t('appointments.helpers.today')
                  elsif date_time.tomorrow?
-                   t('.tomorrow')
+                   t('appointments.helpers.tomorrow')
                  else
                    date_time.strftime("%A")
                  end

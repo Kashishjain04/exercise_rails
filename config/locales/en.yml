@@ -12,12 +12,14 @@ en:
       next_available: "Next Available"
       not_available_today: "Not Available Today"
   appointments:
+    helpers:
+      today: "Today"
+      tomorrow: "Tomorrow"
     appointment:
       your_consultation_details: "🗓 Your Consultation Details"
       download_your_invoice: "Download your Invoice"
       amount_paid: "Amount Paid"
-      today: "Today"
-      tomorrow: "Tomorrow"
+      cancel_appointment: "Cancel Appointment"
     payment_success:
       congratulations: "Congratulations"
       appointment_booked: "Appointment Booked"
@@ -40,6 +42,8 @@ en:
       select_currency: "Select Currency"
     index:
       my_appointments: "My Appointments"
+    destroy:
+      appointment_cancelled: "Appointment was cancelled successfully."
   appointment_mailer:
     booked:
       subject: "Medi App Appointment Booked"
