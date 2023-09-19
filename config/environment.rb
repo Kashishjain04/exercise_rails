@@ -18,4 +18,6 @@ Rails.application.configure do
     password: "iyblivbyyemudrtb",
     enable_starttls_auto: true
   }
+
+  config.i18n.fallbacks = true
 end

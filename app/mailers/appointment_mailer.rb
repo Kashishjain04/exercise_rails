@@ -8,16 +8,16 @@ class AppointmentMailer < ApplicationMailer
   #
   def booked(appointment)
     @appointment = appointment
-    mail to: appointment.user.email, subject: 'Medi App Appointment Booked'
+    mail to: appointment.user.email
   end
 
   def completed(appointment)
     @appointment = appointment
-    mail to: appointment.user.email, subject: 'Medi App Consultation Complete'
+    mail to: appointment.user.email
   end
 
   def cancelled(appointment)
     @appointment = appointment
-    mail to: appointment.user.email, subject: 'Medi App Appointment Cancelled'
+    mail to: appointment.user.email
   end
 end

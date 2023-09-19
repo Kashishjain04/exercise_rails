@@ -17,7 +17,7 @@ class Appointment < ApplicationRecord
 
   def future_date_time
     if date_time.present? && date_time < DateTime.now
-      errors.add(:date_time, 'must be in future')
+      errors.add(:date_time, "must be in future")
       throw :abort
     end
   end
@@ -27,7 +27,7 @@ class Appointment < ApplicationRecord
       date = Date.parse(date_time.to_s).in_time_zone("Kolkata")
       slots = doctor.available_slots[date]
       unless date_time.in? slots
-        errors.add(:date_time, 'must be a valid slot')
+        errors.add(:date_time, "must be a valid slot")
         throw :abort
       end
     end

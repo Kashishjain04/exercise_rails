@@ -1,19 +1,23 @@
-<h1>Medi App</h1>
+<h1><%= t('.app_title') %></h1>
 
 <h3>Dear <%= @appointment.user.name %>,</h3>
 <p>
-  We would like to inform you that, your appointment is booked with us. Refer below for more details.
+  <%= t('.mail_body') %>
 </p>
 
 <table border="1px">
   <tr>
-    <th style="text-align: left">Doctor Name:</th>
+    <th style="text-align: left"><%= t('.appointment_id') %></th>
+    <td><%= @appointment.id %></td>
+  </tr>
+  <tr>
+    <th style="text-align: left"><%= t('.doctor_name') %></th>
     <td><%= @appointment.doctor.name %></td>
   </tr>
   <tr>
-    <th style="text-align: left">Appointment Time:</th>
-    <td><%= parse_time(@appointment.date_time) %></td>
+    <th style="text-align: left"><%= t('.appointment_time') %></th>
+    <td><%= parse_time(@appointment.date_time, 1) %></td>
   </tr>
 </table>
 <br>
-<%= link_to 'More Details', appointment_url(@appointment) %>
+<%= link_to t('.more_details'), appointment_url(@appointment) %>

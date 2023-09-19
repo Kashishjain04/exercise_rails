@@ -1,11 +1,10 @@
 <nav
   class="d-flex align-items-center justify-content-between justify-content-sm-start w-100 py-3 px-4"
 >
-  <%= link_to 'Medi App', doctors_index_path,
+  <%= link_to t('.title'), doctors_index_path,
               class: 'fw-semibold lh-sm fs-5 mb-0 ms-sm-5 ps-sm-5 text-decoration-none text-black' %>
-<!--  <h1 class="fw-semibold lh-sm fs-5 mb-0 ms-sm-5 ps-sm-5">Medi App</h1>-->
   <div class="d-flex align-items-center ms-4 ps-4 column-gap-2">
     <%= image_tag 'icons/calendar.svg', alt: 'calendar', class: 'object-fit-contain', width: 24 %>
-    <span class="lh-base fs-6">My Appointments</span>
+    <span class="lh-base fs-6"><%= t('my_appointments') %></span>
   </div>
 </nav>

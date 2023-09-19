@@ -1,7 +1,7 @@
 <section class="my-5">
   <h5 class="fw-semibold lh-lg mb-3">
     <%= image_tag 'icons/calendar_light', alt: 'Calendar', class: 'mx-2', size: 25 %>
-    Select a date
+    <%= t('.select_a_date') %>
   </h5>
 
   <div id="dateCarousel" class="carousel carousel-dark slide">
@@ -43,7 +43,7 @@
       <div id="nav-<%= date.to_s.gsub(' ', '') %>" class="tab-pane fade <%= 'active show' if i == 0 %>" role="tabpanel">
         <h5 class="fw-semibold mb-0 mb-md-3">
           <%= image_tag 'icons/clock', alt: 'Clock', class: "mx-2", size: 25 %>
-          Select a time for
+          <%= t('.select_a_time_for') %>
           <span class="text-primary">
             <%= date.strftime("%A, %-d %B") %>
           </span>
@@ -64,7 +64,7 @@
 
 <section class="py-3 mt-auto">
   <small class="d-block m-auto text-center">
-    Due to high demand, it is difficult to reschedule appointments. Please book your slot carefully!
+    <%= t('.high_demand_message') %>
   </small>
   <%= button_tag 'Book Appointment',
                  disabled: true,

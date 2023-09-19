@@ -33,7 +33,8 @@ class AppointmentsController < ApplicationController
                                        doctor: Doctor.find(appointment_params[:doctor_id]),
                                        date_time: appointment_params[:date_time],
                                        currency: appointment_params[:user][:preferred_currency],
-                                       amount: view_context.convert_appointment_price(
+                                       amount: view_context.convert_currency(
+                                         Appointment::APPOINTMENT_PRICE_INR,
                                          @rates,
                                          appointment_params[:user][:preferred_currency]
                                        ))

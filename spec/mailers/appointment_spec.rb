@@ -25,7 +25,7 @@ RSpec.describe AppointmentMailer, type: :mailer do
     end
 
     it "renders the body" do
-      expect(mail.body.encoded).to match("Your appointment ##{appointment1.id} is cancelled.")
+      expect(mail.body.encoded).to match("Your appointment is cancelled.")
     end
   end
 

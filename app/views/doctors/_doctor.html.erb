@@ -10,10 +10,10 @@
   <div class="d-flex align-items-center column-gap-sm-3 justify-content-between mt-1">
     <p class="text-secondary fs-7 fw-light lh-sm mb-0">
       <% if !doctor.next_available_today.nil? %>
-        <span class="fw-semibold text-success">Next Available</span>
+        <span class="fw-semibold text-success"><%= t('.next_available') %></span>
         - <%= doctor.next_available_today %>
       <% else %>
-        <span class="fw-semibold text-danger">Not Available Today</span>
+        <span class="fw-semibold text-danger"><%= t('.not_available_today') %></span>
       <% end %>
     </p>
     <%= link_to 'Book Visit', new_appointment_path(doctor_id: doctor),

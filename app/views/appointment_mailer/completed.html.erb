@@ -1,20 +1,20 @@
-<h1>Medi App</h1>
+<h1><%= t('.app_title') %></h1>
 
 <h3>Dear <%= @appointment.user.name %>,</h3>
 <p>
-  Thank you for choosing <strong>Medi App</strong> for your consultation.
+  <%= t('.mail_body_1') %> <strong><%= t('.app_title') %></strong> <%= t('.mail_body_2') %>
 </p>
-<p>Here are your appointment details</p>
+<p><%= t('.appointment_details') %></p>
 
 <table border="1px">
   <tr>
-    <th style="text-align: left">Doctor Name:</th>
+    <th style="text-align: left"><%= t('.doctor_name') %></th>
     <td><%= @appointment.doctor.name %></td>
   </tr>
   <tr>
-    <th style="text-align: left">Appointment Time:</th>
-    <td><%= parse_time(@appointment.date_time) %></td>
+    <th style="text-align: left"><%= t('.appointment_time') %></th>
+    <td><%= parse_time(@appointment.date_time, 1) %></td>
   </tr>
 </table>
 <br>
-<code>PFA: Your Invoice</code>
+<code><%= t('.pfa_your_invoice') %></code>

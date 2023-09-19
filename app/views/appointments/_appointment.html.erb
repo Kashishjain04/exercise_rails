@@ -1,22 +1,45 @@
-<div id="<%= dom_id appointment %>">
-  <p>
-    <strong>Doctor:</strong>
-    <%= appointment.doctor.name %>
-  </p>
+<div id="<%= dom_id appointment %>" class="g-col-12 g-col-md-6 fs-7">
+  <div class="bg-white rounded-4 shadow p-2 h-100">
+    <div class="row mb-3 justify-content-start">
+      <div class="col-3">
+        <%= image_tag appointment.doctor.image,
+                      alt: appointment.doctor.name,
+                      class: 'doctor-image',
+                      height: 75 %>
+      </div>
+      <div class="col-8 d-flex flex-column justify-content-center">
+        <p class="fs-6 fw-bold mb-0"><%= appointment.doctor.name %></p>
+        <p class="text-secondary mb-0"><%= appointment.doctor.address %></p>
+      </div>
+    </div>
+    <h6 class="col-12 mt-4 mb-3 fs-7 text-secondary"><%= t('.your_consultation_details') %></h6>
+    <div class="d-flex gap-3 mb-3 justify-content-between fs-7">
+      <p
+        class="flex-grow-1 pe-2 my-0 d-flex flex-row gap-1
+        justify-content-start align-items-center fw-semibold border-end"
+      >
+        <%= image_tag 'icons/calendar_light', alt: "Calendar", size: 13 %>
+        <%= parse_time(appointment.date_time, 2) %>
+      </p>
+      <p
+        class="my-0 d-flex flex-row gap-3 justify-content-end align-items-center fw-semibold"
+      >
+        <%= image_tag 'icons/clock', alt: "Clock", size: 13 %>
+        <%= parse_time(appointment.date_time, 3) %>
+      </p>
+    </div>
+    <div class="row mb-3 p-3 column-gap-3 justify-content-start text-secondary">
+      <div class="col-12 p-0 fs-7 mb-2"><%= t('.download_your_invoice') %></div>
+      <%= link_to 'CSV', appointment_path(appointment), class: 'col-3 btn btn-dark py-1 px-0' %>
+      <%= link_to 'TXT', appointment_path(appointment), class: 'col-3 btn btn-dark py-1 px-0' %>
+      <%= link_to 'PDF', appointment_path(appointment), class: 'col-3 btn btn-dark py-1 px-0' %>
+    </div>
 
-  <p>
-    <strong>User:</strong>
-    <%= appointment.user.name %>
-  </p>
-
-  <p>
-    <strong>Appointment time:</strong>
-    <%= appointment.date_time %>
-  </p>
-
-  <p>
-    <strong>Amount:</strong>
-    <%= appointment.amount %>
-  </p>
-
+    <div class="row mx-1 mt-4 mb-2 px-3 py-2 rounded-3 justify-content-between bg-light">
+      <p class="col-6 m-0 text-start"><%= t('.amount_paid') %></p>
+      <p class="col-6 m-0 fw-bold text-primary text-end">
+        <%= "#{appointment.currency} #{appointment.amount}/-" %>
+      </p>
+    </div>
+  </div>
 </div>

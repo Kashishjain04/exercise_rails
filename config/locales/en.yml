@@ -1,33 +1,67 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   "true": "foo"
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  layouts:
+    navbar:
+      title: "Medi App"
+    application:
+      title: "Medi App"
+  my_appointments: "My Appointments"
+  doctors:
+    index:
+      my_doctors: "My Doctors"
+    doctor:
+      next_available: "Next Available"
+      not_available_today: "Not Available Today"
+  appointments:
+    appointment:
+      your_consultation_details: "🗓 Your Consultation Details"
+      download_your_invoice: "Download your Invoice"
+      amount_paid: "Amount Paid"
+      today: "Today"
+      tomorrow: "Tomorrow"
+    payment_success:
+      congratulations: "Congratulations"
+      appointment_booked: "Appointment Booked"
+      meeting_starts_in: "Meeting starts in"
+      days: "Days"
+      hours: "Hours"
+      mins: "Mins"
+      secs: "Secs"
+      my_appointments: "My Appointments"
+    processing_payment:
+      processing_payment: "Processing Payment ..."
+    slot_form:
+      select_a_date: "Select a date"
+      select_a_time_for: "Select a time for"
+      high_demand_message: "Due to high demand, it is difficult to reschedule appointments. Please book your slot carefully!"
+    user_form:
+      add_user_details: "Add Details 🧑🏻"
+      enter_name: "Enter Name"
+      enter_email: "Enter Email"
+      select_currency: "Select Currency"
+    index:
+      my_appointments: "My Appointments"
+  appointment_mailer:
+    booked:
+      subject: "Medi App Appointment Booked"
+      app_title: "Medi App"
+      mail_body: "We would like to inform you that, your appointment is booked with us. Refer below for more details."
+      doctor_name: "Doctor Name:"
+      appointment_time: "Appointment Time:"
+      more_details: "More Details"
+      appointment_id: "Appointment Id"
+    cancelled:
+      subject: "Medi App Appointment Cancelled"
+      mail_body: "Your appointment is cancelled. Refer below for more details."
+      appointment_id: "Appointment Id:"
+      doctor_name: "Doctor Name:"
+      appointment_time: "Appointment Time:"
+      app_title: "Medi App"
+    completed:
+      subject: "Medi App Consultation Complete"
+      mail_body_1: "Thank you for choosing"
+      mail_body_2: "for your consultation."
+      app_title: "Medi App"
+      appointment_details: "Here are your appointment details"
+      doctor_name: "Doctor Name:"
+      appointment_time: "Appointment Time:"
+      pfa_your_invoice: "PFA: Your Invoice"

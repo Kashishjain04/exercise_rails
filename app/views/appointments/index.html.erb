@@ -1,14 +1,9 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Appointments</h1>
+<h3 class="h3 fw-bold lh-base text-center my-4"><%= t('.my_appointments') %></h3>
 
-<div id="appointments">
+<div id="appointments" class="grid appointments-container mx-auto gap-4 mb-3">
   <% @appointments.each do |appointment| %>
     <%= render appointment %>
-    <p>
-      <%= link_to "Show this appointment", appointment %>
-    </p>
   <% end %>
 </div>
-
-<%= link_to "New appointment", new_appointment_path %>

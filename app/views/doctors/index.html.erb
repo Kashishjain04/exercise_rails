@@ -4,12 +4,10 @@
   <div class="g-col-12">
     <div class="d-flex col-sm-5 align-items-center ps-0 gap-2 mt-5 mb-1">
       <%= image_tag 'icons/stethoscope', alt: 'Stethoscope', height: 31 %>
-      <p class="my-0 fs-5">My Doctors</p>
+      <p class="my-0 fs-5"><%= t('.my_doctors') %></p>
     </div>
   </div>
   <% @doctors.each do |doctor| %>
     <%= render doctor %>
   <% end %>
 </div>
-
-<%#= link_to "New doctor", new_doctor_path %>
