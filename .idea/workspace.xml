@@ -4,7 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18dfc0b6-1103-473e-a109-da5e03d80396" name="Changes" comment="" />
+    <list default="true" id="18dfc0b6-1103-473e-a109-da5e03d80396" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/views/appointments/_processing_payment.turbo_stream.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/application.bootstrap.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/application.bootstrap.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/appointments_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/appointments_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/controllers/appointment_controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/controllers/appointment_controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/jobs/payment_job.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/jobs/payment_job.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/user.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/user.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/appointments/_appointment.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/appointments/_appointment.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/appointments/_form.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/appointments/_form.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/appointments/_payment_success.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/appointments/_payment_success.turbo_stream.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/appointments/_processing_payment.html.erb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/appointments/_slot_form.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/appointments/_slot_form.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/appointments/_user_form.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/appointments/_user_form.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/appointments/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/appointments/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/appointments/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/appointments/new.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/appointments/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/appointments/show.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/doctors/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/doctors/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/payment_gateway.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/payment_gateway.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/models/user_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/models/user_spec.rb" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,33 +43,33 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: -1
-}</component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 7
+}]]></component>
   <component name="ProjectId" id="2VNO6g1mMoDhgTTFdJQS9nGc16J" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ruby.rails.projectView.checked": "true",
-    "ruby.structure.view.model.defaults.configured": "true",
-    "settings.editor.selected.configurable": "editor.preferences.completion",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ruby.rails.projectView.checked&quot;: &quot;true&quot;,
+    &quot;ruby.structure.view.model.defaults.configured&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.completion&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/config" />
@@ -335,6 +355,7 @@
       <workItem from="1694752356838" duration="23411000" />
       <workItem from="1694845123174" duration="4644000" />
       <workItem from="1695012123551" duration="23828000" />
+      <workItem from="1695198776098" duration="1899000" />
     </task>
     <servers />
   </component>

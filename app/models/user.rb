@@ -2,7 +2,7 @@ class User < ApplicationRecord
   CURRENCIES = %w[INR USD EUR]
 
   has_many :appointments, dependent: :destroy
-  validates_presence_of :name, :email, :preferred_currency
-  validates_uniqueness_of :email
-  validates :preferred_currency, inclusion: CURRENCIES
+  validates :name, presence: true, format: /\A[A-Za-z][\w ]{5,}/
+  validates :email, presence: true, uniqueness: true, format: URI::MailTo::EMAIL_REGEXP
+  validates :preferred_currency, presence: true, inclusion: CURRENCIES
 end

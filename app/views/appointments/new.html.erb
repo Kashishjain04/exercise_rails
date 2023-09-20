@@ -1,5 +1,9 @@
 <%= turbo_stream_from(:appointment) %>
-<p style="color: green"><%= notice %></p>
+<% if flash[:error] %>
+<p class="alert alert-danger mt-4 mb-0" role="alert">
+  <%= flash[:error] %>
+</p>
+<% end %>
 <div data-controller="appointment" id="appointment_form">
   <%= render "form", appointment: @appointment %>
 </div>

@@ -1,6 +1,10 @@
-<p style="color: green"><%= notice %></p>
+<% if notice %>
+  <p class="alert alert-success mt-4 mb-0" role="alert">
+    <%= notice %>
+  </p>
+<% end %>
 
-<h3 class="h3 fw-bold lh-base text-center my-4"><%= t('.my_appointments') %></h3>
+<h3 class="fw-bold lh-base text-center my-4"><%= t('.my_appointments') %></h3>
 
 <div id="appointments" class="grid appointments-container mx-auto gap-4 mb-3">
   <% @appointments.each do |appointment| %>

@@ -1,0 +1,9 @@
+<%= turbo_stream.replace('appointment_form') do %>
+  <div id="appointment_form" class="vw-100 vh-100 position-fixed top-0 start-0
+  d-flex align-items-center justify-content-center bg-black"
+       style="--bs-bg-opacity: 0.5;">
+    <div class="p-5 bg-info rounded-3 shadow-lg">
+      <h1 class="fw-bold text-info-emphasis"><%= t('.processing_payment') %></h1>
+    </div>
+  </div>
+<% end %>

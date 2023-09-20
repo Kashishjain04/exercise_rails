@@ -33,6 +33,9 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments/new
   def new
+    puts "=---------------"
+    puts flash[:error]
+    puts "=---------------"
     @appointment = Appointment.new(doctor_id: params[:doctor_id])
     @slots = @appointment.doctor.available_slots
     session_user = get_session_user
@@ -47,8 +50,13 @@ class AppointmentsController < ApplicationController
   def create
     new_user = User.find_or_create_by(email: appointment_params[:user][:email])
     new_user.update(appointment_params[:user])
+    unless new_user.valid?
+      flash[:error] = "Invalid User Details"
+      redirect_to new_appointment_path, params: { doctor_id: appointment_params[:doctor_id] },
+                  status: :unprocessable_entity
+      return
+    end
     session[:user_id] = new_user.id
-
     @appointment = Appointment.create!(user: new_user,
                                        doctor: Doctor.find(appointment_params[:doctor_id]),
                                        date_time: appointment_params[:date_time],
@@ -63,8 +71,10 @@ class AppointmentsController < ApplicationController
       if @appointment.save
         format.turbo_stream { PaymentJob.perform_now(@appointment) }
       else
-        format.html { render :new, params: { doctor_id: appointment_params[:doctor_id] },
-                             status: :unprocessable_entity }
+        flash[:error] = "Invalid Name"
+        flash.keep
+        format.html { redirect_to new_appointment_path, params: { doctor_id: 2 },
+                                  notice: "Invalid Name", status: :unprocessable_entity}
         format.json { render json: @appointment.errors, status: :unprocessable_entity }
       end
     end

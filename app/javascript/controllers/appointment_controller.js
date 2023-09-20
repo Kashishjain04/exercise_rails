@@ -2,7 +2,7 @@ import {Controller} from "@hotwired/stimulus"
 
 // Connects to data-controller="appointment"
 export default class extends Controller {
-    static targets = ['bookAppointment', 'slotForm', 'userForm', 'processingPayment', 'payButton']
+    static targets = ['bookAppointment', 'slotForm', 'userForm', 'payButton']
 
     initialize() {
         this.activateSlotForm()
@@ -16,7 +16,6 @@ export default class extends Controller {
         let appointmentScreens = [
             this.slotFormTarget,
             this.userFormTarget,
-            this.processingPaymentTarget
         ]
 
         appointmentScreens.forEach(function (screen) {
@@ -37,13 +36,6 @@ export default class extends Controller {
 
         this.slotFormTarget.classList.remove('d-none')
         this.slotFormTarget.classList.add('active')
-    }
-
-    payment() {
-        // this.disableAllScreens()
-
-        this.processingPaymentTarget.classList.remove('d-none')
-        this.processingPaymentTarget.classList.add('active')
     }
 
     convertCurrency(event) {

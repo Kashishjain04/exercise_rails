@@ -1,4 +1,8 @@
-<p style="color: green"><%= notice %></p>
+<% if notice %>
+  <p class="alert alert-success mt-4 mb-0" role="alert">
+    <%= notice %>
+  </p>
+<% end %>
 
 <%= render @appointment %>
 

@@ -15,14 +15,14 @@
           <div class="carousel-item <%= 'active' if i == 0 %>">
             <% dates.each_with_index do |date, j| %>
               <div
-                class="date-item w-100 mx-1 d-flex flex-column justify-content-center <%= 'active' if i + j == 0 %>"
+                class="carousel-date w-100 mx-1 d-flex flex-column justify-content-center <%= 'active' if i + j == 0 %>"
                 data-bs-toggle="tab"
                 data-bs-target="#nav-<%= date.to_s.gsub(' ', '') %>"
                 type="button"
                 role="tab">
-                    <span class="d-block h5 text-center">
-                      <%= date.strftime("%a, %-d") %>
-                    </span>
+                <h5 class="d-block text-center">
+                  <%= date.strftime("%a, %-d") %>
+                </h5>
                 <span class="d-block text-center text-secondary small"><%= date.strftime("%b") %></span>
               </div>
             <% end %>
@@ -71,5 +71,5 @@
                  type: 'button',
                  class: 'mt-3 btn btn-lg btn-primary text-white w-100 p-3 rounded-3',
                  'data-appointment-target': 'bookAppointment',
-                 'data-action': 'click->appointment#activateUserForm'%>
+                 'data-action': 'click->appointment#activateUserForm' %>
 </section>
