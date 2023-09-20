@@ -3,12 +3,16 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
 
+.filter-primary {
+  filter: invert(20%) sepia(96%) saturate(5107%) hue-rotate(244deg) brightness(104%) contrast(101%);
+}
+
 nav {
   @include media-breakpoint-up(sm) {
     background: white;
     box-shadow: 0 4px 6px rgba(65, 52, 146, 0.06), 0 4px 12px rgba(65, 52, 146, 0.12);
-    div {
-      border-left: 1px solid black;
+    .nav-brand {
+      border-right: 1px solid black;
     }
   }
 }

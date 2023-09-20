@@ -1,13 +1,11 @@
 class Doctor < ApplicationRecord
   validates_presence_of :name, :address, :image
+  validates :name, presence: true, format: /\A[A-Za-z][\w ]{5,}\z/
+  validates :address, presence: true, format: /\A.{6,}/
+  validates :image, presence: true, format: /\A.+\.(gif|png|jpg|jpeg)\z/
   has_many :appointments
   before_destroy :ensure_not_appointed
-
-  # Time.zone = "Kolkata"
-  START_TIME = Time.parse('11:00:00')
-  END_TIME = Time.parse('16:00:00')
-  BREAK_START_TIME = Time.parse('12:00:00')
-  BREAK_END_TIME = Time.parse('14:00:00')
+  validate :working_timestamps
 
   MAX_DAYS = 7
 
@@ -19,23 +17,23 @@ class Doctor < ApplicationRecord
       current_date = Date.today.in_time_zone("Kolkata") + i.days
       temp_slots = []
 
-      start_time = get_time_on_day(current_date, START_TIME)
-      break_start = get_time_on_day(current_date, BREAK_START_TIME)
-      break_end = get_time_on_day(current_date, BREAK_END_TIME)
-      end_time = get_time_on_day(current_date, END_TIME)
+      start_timestamp = get_time_on_day(current_date, start_time)
+      break_start_timestamp = get_time_on_day(current_date, break_start_time)
+      break_end_timestamp = get_time_on_day(current_date, break_end_time)
+      end_timestamp = get_time_on_day(current_date, end_time)
 
-      time = start_time
+      time = start_timestamp
 
-      while time < break_start
+      while time < break_start_timestamp
         if time > DateTime.now && !booked_slots.include?(time)
           temp_slots.push(time)
         end
         time += 1.hours
       end
 
-      time = break_end
+      time = break_end_timestamp
 
-      while time < end_time
+      while time < end_timestamp
         if time > DateTime.now && !booked_slots.include?(time)
           temp_slots.push(time)
         end
@@ -67,4 +65,18 @@ class Doctor < ApplicationRecord
     end
   end
 
+  def working_timestamps
+    unless break_end_time < end_time
+      errors.add(:break_end_time, "Doctor's working timestamps are invalid")
+      throw :abort
+    end
+    unless break_start_time < break_end_time
+      errors.add(:break_start_time, "Doctor's working timestamps are invalid")
+      throw :abort
+    end
+    unless start_time < break_start_time
+      errors.add(:start_time, "Doctor's working timestamps are invalid")
+      throw :abort
+    end
+  end
 end

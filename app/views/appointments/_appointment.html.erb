@@ -1,9 +1,10 @@
 <div id="<%= dom_id appointment %>" class="g-col-12 g-col-md-6 fs-7">
   <div class="bg-white rounded-4 shadow p-2 h-100 d-flex flex-column">
-    <div class="row mb-3 justify-content-start">
+    <div class="row my-3 justify-content-start">
       <div class="col-3">
         <%= image_tag appointment.doctor.image,
                       alt: appointment.doctor.name,
+                      class: 'shadow-sm rounded-2',
                       height: 75 %>
       </div>
       <div class="col-8 d-flex flex-column justify-content-center">
@@ -45,7 +46,7 @@
       <%= button_to t('.cancel_appointment'),
                      appointment, method: :delete,
                      disabled: appointment.date_time - DateTime.now < Appointment::CANCEL_DEADLINE,
-                     class: 'col-12 py-1 rounded-3 fs-7 btn btn-outline-danger' %>
+                     class: 'col-12 py-1 mb-1 rounded-3 fs-7 btn btn-outline-danger' %>
     </div>
   </div>
 </div>
