@@ -44,6 +44,7 @@ en:
       my_appointments: "My Appointments"
     destroy:
       appointment_cancelled: "Appointment was cancelled successfully."
+      cancellation_windows_closed: "Cancellation windows closed"
   appointment_mailer:
     booked:
       subject: "Medi App Appointment Booked"

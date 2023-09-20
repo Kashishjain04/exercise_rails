@@ -1,0 +1,21 @@
+<h1 class="text-center fw-bold">Medi App Receipt</h1>
+
+<h1 class="fw-bold mt-5"><%= appointment.doctor.name %></h1>
+<h2 class="fw-bold"><%= appointment.doctor.address %></h2>
+
+<h1 class="mt-5 pt-5 mb-3">
+  <span class="text-decoration-underline">Patient Name:</span>
+  <%= appointment.user.name %>
+</h1>
+<h1 class="mt-5 pt-5 mb-3">
+  <span class="text-decoration-underline">Patient Email:</span>
+  <%= appointment.user.email %>
+</h1>
+<h1 class="mb-3">
+  <span class="text-decoration-underline">Time of Meeting:</span>
+  <%= parse_time(appointment.date_time, 4) %>
+</h1>
+<h1 class="mb-3">
+  <span class="text-decoration-underline">Appointment Fees:</span>
+  <%= parse_appointment_fees(appointment) %>
+</h1>

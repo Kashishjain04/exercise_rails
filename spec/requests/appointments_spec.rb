@@ -65,17 +65,52 @@ RSpec.describe "/appointments", type: :request do
   describe "DELETE /delete" do
     before do
       @appointment1 = create(:appointment)
+      Timecop.freeze(@appointment1.date_time - (Appointment::CANCEL_DEADLINE + 1.minute))
     end
-    it "deletes a valid appointment" do
-      expect {
-        delete appointment_url @appointment1
-      }.to change(Appointment, :count).by(-1)
+    context "valid params" do
+      it "deletes a valid appointment" do
+        expect {
+          delete appointment_url @appointment1
+        }.to change(Appointment, :count).by(-1)
+      end
+
+      it "sends email to the user" do
+        expect {
+          delete appointment_url @appointment1
+        }.to have_enqueued_mail(AppointmentMailer, :cancelled)
+      end
+    end
+    context "invalid params" do
+      it "does not delete appointment scheduled for less than 30 minutes" do
+        Timecop.freeze(@appointment1.date_time - (Appointment::CANCEL_DEADLINE - 1.minute))
+        expect {
+          delete appointment_url @appointment1
+        }.to change(Appointment, :count).by(0)
+      end
+
+      it "does not send cancellation mail" do
+        Timecop.freeze(@appointment1.date_time - (Appointment::CANCEL_DEADLINE - 1.minute))
+        expect {
+          delete appointment_url @appointment1
+        }.not_to have_enqueued_mail(Appointment)
+      end
+    end
+  end
+
+  describe "SHOW /show" do
+    it "prints the receipt in csv" do
+      get appointment_path appointment1, format: :csv
+      expect (response.header["Content-Disposition"]).match("receipt-#{appointment1.id}.csv")
     end
 
-    it "sends email to the user" do
-      expect {
-        delete appointment_url @appointment1
-      }.to have_enqueued_mail(AppointmentMailer, :cancelled)
+    it "prints the receipt in txt" do
+      get appointment_path appointment1, format: :txt
+      expect (response.header["Content-Disposition"]).match("receipt-#{appointment1.id}.txt")
+    end
+
+    it "prints the receipt in pdf" do
+      get appointment_path appointment1, format: :pdf
+      expect (response.header["Content-Disposition"]).match("receipt-#{appointment1.id}.pdf")
     end
   end
 end

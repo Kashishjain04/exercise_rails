@@ -1,0 +1,9 @@
+Medi App Receipt
+
+Appointment Id: <%= @appointment.id %>
+Patient Name: <%= @appointment.user.name %>
+Patient Email: <%= @appointment.user.email %>
+Doctor Name: <%= @appointment.doctor.name %>
+Doctor Address: <%= @appointment.doctor.address %>
+Time of Meeting: <%= parse_time(@appointment.date_time, 4) %>
+Appointment Fees: <%= parse_appointment_fees(@appointment) %>"

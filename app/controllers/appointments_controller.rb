@@ -1,7 +1,6 @@
 class AppointmentsController < ApplicationController
   before_action :set_appointment, only: %i[ show edit update destroy ]
   before_action :set_currency_rates, only: %i[ new create ]
-  before_action :send_cancelled_mail, only: :destroy
 
   # GET /appointments or /appointments.json
   def index
@@ -10,6 +9,26 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments/1 or /appointments/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.text do
+        response.headers['Content-Type'] = 'text/plain'
+        response.headers['Content-Disposition'] = "attachment; filename=receipt-#{@appointment.id}.txt"
+      end
+      format.csv do
+        response.headers['Content-Type'] = 'text/csv'
+        response.headers['Content-Disposition'] = "attachment; filename=receipt-#{@appointment.id}.csv"
+      end
+      format.pdf do
+        render pdf: "receipt-#{@appointment.id}",
+               page_size: 'A4',
+               layout: "application",
+               orientation: "Portrait",
+               zoom: 1,
+               dpi: 75,
+               locals: { appointment: @appointment }
+      end
+    end
   end
 
   # GET /appointments/new
@@ -66,15 +85,18 @@ class AppointmentsController < ApplicationController
 
   # DELETE /appointments/1 or /appointments/1.json
   def destroy
-    @appointment.destroy!
     respond_to do |format|
-      format.html { redirect_to appointments_url, notice: t('.appointment_cancelled') }
-      format.json { head :no_content }
+      if (@appointment.date_time - DateTime.now) <= Appointment::CANCEL_DEADLINE
+        format.html { redirect_to appointments_url, notice: t('.cancellation_windows_closed') }
+      else
+        @appointment.destroy!
+        format.html { redirect_to appointments_url, notice: t('.appointment_cancelled') }
+        format.json { head :no_content }
+      end
     end
   end
 
   private
-
   # Use callbacks to share common setup or constraints between actions.
   def set_appointment
     @appointment = Appointment.find(params[:id])
@@ -91,9 +113,5 @@ class AppointmentsController < ApplicationController
       :doctor_id,
       user: [:name, :email, :preferred_currency]
     )
-  end
-
-  def send_cancelled_mail
-    AppointmentMailer.cancelled(@appointment.as_json).deliver_later
   end
 end

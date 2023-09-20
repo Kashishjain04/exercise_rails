@@ -8,13 +8,13 @@ class Appointment < ApplicationRecord
   validate :date_time_is_valid_slot, on: :create
   validates :amount, numericality: { greater_than_or_equal_to: 0.01 }, on: :create
   validates :currency, inclusion: User::CURRENCIES
+  after_destroy :send_cancelled_mail
 
   APPOINTMENT_PRICE_INR = 500
-
+  CANCEL_DEADLINE = 30.minutes
 
 
   private
-
   def future_date_time
     if date_time.present? && date_time < DateTime.now
       errors.add(:date_time, "must be in future")
@@ -31,5 +31,16 @@ class Appointment < ApplicationRecord
         throw :abort
       end
     end
+  end
+
+  def date_time_more_than_half_hour
+    if date_time.present? && (date_time - DateTime.now) <= CANCEL_DEADLINE
+      errors.add(:date_time, "cancellation window closed")
+      throw :abort
+    end
+  end
+
+  def send_cancelled_mail
+    AppointmentMailer.cancelled(self.as_json).deliver_later
   end
 end

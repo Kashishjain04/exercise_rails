@@ -8,6 +8,10 @@ module AppointmentsHelper
     "#{actual_price} #{currency}"
   end
 
+  def parse_appointment_fees(appointment)
+    "#{appointment.currency} #{appointment.amount}/-"
+  end
+
   def parse_time(date_time, format)
     day_string = if date_time.today?
                    t('appointments.helpers.today')
@@ -25,6 +29,8 @@ module AppointmentsHelper
       "#{day_string}, #{date_string} #{date_time.strftime("%B")}"
     when 3
       date_time.strftime("%l:%M %p")
+    when 4
+      "#{date_string} #{date_time.strftime("%B, %l:%M %p")}"
     end
   end
 end

@@ -31,9 +31,9 @@
     <div class="flex-grow-1"></div>
     <div class="row mb-3 p-3 column-gap-3 justify-content-start text-secondary">
       <div class="col-12 p-0 fs-7 mb-2"><%= t('.download_your_invoice') %></div>
-      <%= link_to 'CSV', appointment_path(appointment), class: 'col-3 btn btn-dark py-1 px-0' %>
-      <%= link_to 'TXT', appointment_path(appointment), class: 'col-3 btn btn-dark py-1 px-0' %>
-      <%= link_to 'PDF', appointment_path(appointment), class: 'col-3 btn btn-dark py-1 px-0' %>
+      <%= link_to 'CSV', appointment_path(appointment, format: :csv), class: 'col-3 btn btn-dark py-1 px-0' %>
+      <%= link_to 'TXT', appointment_path(appointment, format: :txt), class: 'col-3 btn btn-dark py-1 px-0' %>
+      <%= link_to 'PDF', appointment_path(appointment, format: :pdf), class: 'col-3 btn btn-dark py-1 px-0' %>
     </div>
     <div class="row mx-1 mb-2 px-3 py-2 rounded-3 justify-content-between bg-light">
       <p class="col-6 m-0 text-start"><%= t('.amount_paid') %></p>
@@ -45,7 +45,7 @@
     <div class="px-1">
       <%= button_to t('.cancel_appointment'),
                      appointment, method: :delete,
-                     disabled: appointment.date_time - DateTime.now < 30.minutes,
+                     disabled: appointment.date_time - DateTime.now < Appointment::CANCEL_DEADLINE,
                      class: 'col-12 py-1 rounded-3 fs-7 btn btn-outline-danger' %>
     </div>
   </div>
