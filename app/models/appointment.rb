@@ -12,7 +12,7 @@ class Appointment < ApplicationRecord
 
   APPOINTMENT_PRICE_INR = 500
   CANCEL_DEADLINE = 30.minutes
-
+  COMPLETION_MAIL_DELIVERY = 2.hours
 
   private
   def future_date_time

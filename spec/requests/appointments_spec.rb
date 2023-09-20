@@ -45,7 +45,7 @@ RSpec.describe "/appointments", type: :request do
           }
         }, as: :turbo_stream }
           .to have_enqueued_mail(AppointmentMailer, :completed)
-                .at(doctor1.available_slots.values.first[0] + 2.hours)
+                .at(doctor1.available_slots.values.first[0] + Appointment::COMPLETION_MAIL_DELIVERY)
       end
     end
 

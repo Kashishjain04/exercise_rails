@@ -5,7 +5,7 @@ class PaymentJob < ApplicationJob
     PaymentGateway.make_payment
     AppointmentMailer.booked(appointment).deliver_later
     AppointmentMailer.completed(appointment)
-      .deliver_later(wait_until: appointment.date_time + 2.hours)
+      .deliver_later(wait_until: appointment.date_time + Appointment::COMPLETION_MAIL_DELIVERY)
     Turbo::StreamsChannel.broadcast_render_later_to(
       :appointment,
       partial: 'appointments/payment_success',
