@@ -1,14 +1,3 @@
-<% if notice %>
-  <p class="alert alert-success mt-4 mb-0" role="alert">
-    <%= notice %>
-  </p>
-<% end %>
-
-<%= render @appointment %>
-
-<div>
-  <%= link_to "Edit this appointment", edit_appointment_path(@appointment) %> |
-  <%= link_to "Back to appointments", appointments_path %>
-
-  <%= button_to "Destroy this appointment", @appointment, method: :delete %>
+<div class="appointment-page mx-auto mt-5">
+  <%= render @appointment %>
 </div>

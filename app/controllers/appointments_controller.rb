@@ -10,6 +10,10 @@ class AppointmentsController < ApplicationController
   # GET /appointments/1 or /appointments/1.json
   def show
     respond_to do |format|
+      if @appointment.nil?
+        render_404
+        return
+      end
       format.html
       format.text do
         response.headers['Content-Type'] = 'text/plain'
@@ -33,9 +37,6 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments/new
   def new
-    puts "=---------------"
-    puts flash[:error]
-    puts "=---------------"
     @appointment = Appointment.new(doctor_id: params[:doctor_id])
     @slots = @appointment.doctor.available_slots
     session_user = get_session_user
@@ -74,7 +75,7 @@ class AppointmentsController < ApplicationController
         flash[:error] = "Invalid Name"
         flash.keep
         format.html { redirect_to new_appointment_path, params: { doctor_id: 2 },
-                                  notice: "Invalid Name", status: :unprocessable_entity}
+                                  notice: "Invalid Name", status: :unprocessable_entity }
         format.json { render json: @appointment.errors, status: :unprocessable_entity }
       end
     end
@@ -107,9 +108,15 @@ class AppointmentsController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_appointment
-    @appointment = Appointment.find(params[:id])
+    begin
+      @appointment = Appointment.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => e
+      @appointment = nil
+      # render :text => 'Not Found', :status => '404'
+    end
   end
 
   def set_currency_rates
