@@ -3,6 +3,11 @@
     <%= notice %>
   </p>
 <% end %>
+<% if flash[:error] %>
+  <p class="alert alert-danger mt-4 mb-0" role="alert">
+    <%= flash[:error] %>
+  </p>
+<% end %>
 <div id="doctors" class="mx-auto doctor-container d-flex flex-column d-sm-grid grid row-gap-3 row-gap-sm-4 column-gap-5">
   <div class="g-col-12">
     <div class="d-flex col-sm-5 align-items-center ps-0 gap-2 mt-5 mb-1">

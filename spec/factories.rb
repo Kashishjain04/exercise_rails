@@ -8,14 +8,17 @@ FactoryBot.define do
   factory :user do
     name { "UserOne" }
     email { "user@email.com" }
-    preferred_currency { 'INR' }
+    preferred_currency { 'USD' }
   end
 
   factory :appointment do
     user { create(:user) }
     doctor { create(:doctor) }
     date_time { self.doctor.available_slots.values.first[0] }
-    amount { 6.02 }
-    currency { 'USD' }
+    amount_inr { 500 }
+    currency_rates { { INR: 88.686078,
+                       USD: 0.01203509078,
+                       EUR: 0.01127572695
+    } }
   end
 end

@@ -47,6 +47,9 @@ en:
       cancellation_windows_closed: "Cancellation windows closed"
     new:
       appointment_error_message: "prohibited this appointment from being created:"
+      something_went_wrong: "Something went wrong."
+    create:
+      something_went_wrong: "Something went wrong."
   appointment_mailer:
     booked:
       subject: "Medi App Appointment Booked"

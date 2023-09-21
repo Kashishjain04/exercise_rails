@@ -9,7 +9,7 @@ RSpec.describe "/appointments", type: :request do
             appointment: {
               doctor_id: doctor1.id,
               date_time: doctor1.available_slots.values.first[0],
-              user: user1.as_json
+              user: user1.as_json,
             }
           }, as: :turbo_stream
         }.to change(Appointment, :count).by(1)

@@ -6,8 +6,8 @@ RSpec.describe Appointment, type: :model do
       user_id: user1.id,
       doctor_id: doctor1.id,
       date_time: doctor1.available_slots.values.first[0],
-      amount: 500,
-      currency: 'INR'
+      amount_inr: 500,
+      currency_rates: FixerApi.today_rates
     }
   }
   let(:invalid_params) { [
@@ -15,15 +15,15 @@ RSpec.describe Appointment, type: :model do
       user_id: user1.id,
       doctor_id: doctor1.id,
       date_time: DateTime.now - 1.seconds,
-      amount: 500,
-      currency: 'INR'
+      amount_inr: 500,
+      currency_rates: FixerApi.today_rates
     },
     {
       user_id: user1.id,
       doctor_id: doctor1.id,
       date_time: doctor1.available_slots.values.first[0] + 10.minutes,
-      amount: 500,
-      currency: 'INR'
+      amount_inr: 500,
+      currency_rates: FixerApi.today_rates
     }
   ] }
 
@@ -41,12 +41,12 @@ RSpec.describe Appointment, type: :model do
         expect { Appointment.create!(**valid_params.except(:date_time)) }
           .to raise_error(ActiveRecord::RecordInvalid)
       end
-      it "validates presence of amount" do
-        expect { Appointment.create!(**valid_params.except(:amount)) }
+      it "validates presence of amount_inr" do
+        expect { Appointment.create!(**valid_params.except(:amount_inr)) }
           .to raise_error(ActiveRecord::RecordInvalid)
       end
-      it "validates presence of currency" do
-        expect { Appointment.create!(**valid_params.except(:currency)) }
+      it "validates presence of currency_rates" do
+        expect { Appointment.create!(**valid_params.except(:currency_rates)) }
           .to raise_error(ActiveRecord::RecordInvalid)
       end
     end
@@ -62,12 +62,15 @@ RSpec.describe Appointment, type: :model do
     end
 
     it "throws an error if invalid amount is passed" do
-      expect { Appointment.create!(**valid_params, amount: -1) }
+      expect { Appointment.create!(**valid_params, amount_inr: -1) }
         .to raise_error(ActiveRecord::RecordInvalid)
     end
 
     it "throws an error if invalid currency is passed" do
-      expect { Appointment.create!(**valid_params, currency: "CAD") }
+      expect { Appointment.create!(
+        **valid_params,
+        currency_rates: FixerApi.today_rates.except("USD")
+      ) }
         .to raise_error(ActiveRecord::RecordInvalid)
     end
   end

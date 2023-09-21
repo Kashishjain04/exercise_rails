@@ -1,15 +1,16 @@
 module AppointmentsHelper
-  def convert_currency(amount, rates, currency)
-    (amount * rates[currency]).round(2)
+  def convert_currency(amount_inr, rates, currency)
+    (amount_inr * rates[currency]).round(2)
   end
 
-  def print_appointment_price(amount, rates, currency)
-    actual_price = convert_currency(amount, rates, currency)
+  def print_appointment_price(amount_inr, rates, currency)
+    actual_price = convert_currency(amount_inr, rates, currency)
     "#{actual_price} #{currency}"
   end
 
   def parse_appointment_fees(appointment)
-    "#{appointment.currency} #{appointment.amount}/-"
+    currency = appointment.user.preferred_currency
+    "#{currency} #{convert_currency(appointment.amount_inr, appointment.currency_rates, currency)}/-"
   end
 
   def parse_time(date_time, format)

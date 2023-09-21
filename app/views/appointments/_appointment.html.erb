@@ -38,7 +38,7 @@
     <div class="row mx-1 mb-2 px-3 py-2 rounded-3 justify-content-between bg-light">
       <p class="col-6 m-0 text-start"><%= t('.amount_paid') %></p>
       <p class="col-6 m-0 fw-bold text-primary text-end">
-        <%= "#{appointment.currency} #{appointment.amount}/-" %>
+        <%= parse_appointment_fees(appointment) %>
       </p>
     </div>
 

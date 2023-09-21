@@ -181,7 +181,8 @@ RSpec.describe Doctor, type: :model do
       before do
         doctor1.available_slots.values.first.each do |slot|
           Appointment.create!(
-            user: user1, doctor: doctor1, date_time: slot, amount: 500, currency: 'INR'
+            user: user1, doctor: doctor1, date_time: slot,
+            amount_inr: 500, currency_rates: FixerApi.today_rates
           )
         end
       end
@@ -205,7 +206,8 @@ RSpec.describe Doctor, type: :model do
       before do
         doctor1.available_slots.values.first.each do |slot|
           Appointment.create!(
-            user: user1, doctor: doctor1, date_time: slot, amount: 500, currency: 'INR'
+            user: user1, doctor: doctor1, date_time: slot,
+            amount_inr: 500, currency_rates: FixerApi.today_rates
           )
         end
       end

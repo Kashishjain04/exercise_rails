@@ -5,9 +5,13 @@ module FixerApi
 
   def self.today_rates
     Rails.cache.fetch([self, :currency_rates], expires_in: 1.day) do
-      rates = JSON.parse(currency_rates.body)["rates"]
-      rates = rates.map { |key, val| [key, val.to_f / rates["INR"]] }.to_h
-      rates.as_json
+      begin
+        rates = JSON.parse(currency_rates.body)["rates"]
+        rates = rates.map { |key, val| [key, val.to_f / rates["INR"]] }.to_h
+        rates.as_json
+      rescue
+        return nil
+      end
     end
   end
 

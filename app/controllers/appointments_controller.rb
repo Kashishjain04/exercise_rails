@@ -39,6 +39,7 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments/new
   def new
+    @rates = FixerApi.today_rates
     @appointment = Appointment.new(doctor_id: params[:doctor_id])
     @slots = @appointment.doctor.available_slots
     session_user = get_session_user
@@ -53,12 +54,8 @@ class AppointmentsController < ApplicationController
       user: new_user,
       doctor: Doctor.find(appointment_params[:doctor_id]),
       date_time: appointment_params[:date_time],
-      currency: appointment_params[:user][:preferred_currency],
-      amount: view_context.convert_currency(
-        Appointment::APPOINTMENT_PRICE_INR,
-        @rates,
-        appointment_params[:user][:preferred_currency]
-      )
+      amount_inr: Appointment::APPOINTMENT_PRICE_INR,
+      currency_rates: @rates
     )
 
     if new_user.errors.any?
@@ -99,6 +96,7 @@ class AppointmentsController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_appointment
     @user = get_session_user
@@ -113,6 +111,10 @@ class AppointmentsController < ApplicationController
 
   def set_currency_rates
     @rates = FixerApi.today_rates
+    if @rates.nil?
+      flash[:error] = "Something went wrong"
+      redirect_to doctors_index_path
+    end
   end
 
   # Only allow a list of trusted parameters through.
