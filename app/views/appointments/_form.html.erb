@@ -1,5 +1,5 @@
 <%= form_with(model: appointment) do |form| %>
-  <%= form.hidden_field :doctor_id, value: params[:doctor_id] %>
+  <%= form.hidden_field :doctor_id, value: appointment.doctor.id %>
 
   <div data-appointment-target="slotForm" class="slot-form mx-auto gap-3 d-none">
     <%= render partial: 'slot_form', locals: { form: form } %>

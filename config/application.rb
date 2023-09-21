@@ -14,6 +14,11 @@ module MediApp
     config.time_zone = "Mumbai"
     config.active_record.default_timezone = :local
 
+    # overwrite form error behaviour
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance|
+      html_tag
+    }
+
     # load environment variables
     config.before_configuration do
       env_file = File.join(Rails.root, 'config', 'local_env.yml')

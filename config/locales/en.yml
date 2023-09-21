@@ -45,6 +45,8 @@ en:
     destroy:
       appointment_cancelled: "Appointment was cancelled successfully."
       cancellation_windows_closed: "Cancellation windows closed"
+    new:
+      appointment_error_message: "prohibited this appointment from being created:"
   appointment_mailer:
     booked:
       subject: "Medi App Appointment Booked"
@@ -71,3 +73,12 @@ en:
       appointment_time: "Appointment Time:"
       pfa_your_invoice: "PFA: Your Invoice"
       download_your_invoice: "Download Your Invoice"
+  users:
+    form:
+      enter_name: "Enter Name"
+      enter_email: "Enter Email"
+      currency_preference: "Currency Preference"
+      continue: "Continue"
+    new:
+      login_signup: "Login | Signup"
+      user_error_message: "prohibited this user from being created:"

@@ -7,60 +7,61 @@ RSpec.describe User, type: :model do
       email: "user@one.com",
     }
   }
-  let(:invalid_attributes) { {
-    not_name: {
-      email: "one@user.com"
-    },
-    not_email: {
-      name: "UserOne"
-    },
-    invalid_currency: {
-      name: "UserOne",
-      email: "one@user.com",
-      preferred_currency: "CAD"
-    },
-    invalid_name: [
-      {
-        name: "1UserName",
-        email: "one@user.com"
-      },
-      {
-        name: "User",
-        email: "one@user.com"
-      },
-      {
-        name: " User",
-        email: "one@user.com"
-      },
-      {
-        name: "User@Name",
-        email: "one@user.com"
-      },
-    ],
-    invalid_email: [
-      {
-        name: "UserOne",
-        email: "one@user."
-      },
-      {
-        name: "UserOne",
-        email: "one@.com"
-      },
-      {
-        name: "UserOne",
-        email: "one@"
-      },
-      {
-        name: "UserOne",
-        email: "@user.com"
-      },
-      {
-        name: "UserOne",
-        email: "user.com"
-      }
-    ]
-  } }
+
   describe "validations" do
+    let(:invalid_attributes) { {
+      not_name: {
+        email: "one@user.com"
+      },
+      not_email: {
+        name: "UserOne"
+      },
+      invalid_currency: {
+        name: "UserOne",
+        email: "one@user.com",
+        preferred_currency: "CAD"
+      },
+      invalid_name: [
+        {
+          name: "1UserName",
+          email: "one@user.com"
+        },
+        {
+          name: "User",
+          email: "one@user.com"
+        },
+        {
+          name: " User",
+          email: "one@user.com"
+        },
+        {
+          name: "User@Name",
+          email: "one@user.com"
+        },
+      ],
+      invalid_email: [
+        {
+          name: "UserOne",
+          email: "one@user."
+        },
+        {
+          name: "UserOne",
+          email: "one@.com"
+        },
+        {
+          name: "UserOne",
+          email: "one@"
+        },
+        {
+          name: "UserOne",
+          email: "@user.com"
+        },
+        {
+          name: "UserOne",
+          email: "user.com"
+        }
+      ]
+    } }
     context "presence" do
       it "validates presence of name" do
         expect { User.create!(invalid_attributes[:not_name]) }

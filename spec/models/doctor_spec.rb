@@ -1,113 +1,114 @@
 require 'rails_helper'
 
 RSpec.describe Doctor, type: :model do
-  let(:valid_attributes) { {
-    name: "DoctorOne",
-    address: "Address",
-    image: "/doctors/doctor-1.png"
-  } }
-  let(:invalid_attributes) { {
-    not_name: {
-      address: "Address",
-      image: "/doctors/doctor-1.png"
-    },
-    not_address: {
-      name: "DoctorOne",
-      image: "/doctors/doctor-1.png"
-    },
-    not_image: {
-      name: "DoctorOne",
-      address: "Address",
-    },
-    invalid_name: [
-      {
-        name: "1DoctorName",
-        address: "Address",
-        image: "/doctors/doctor-1.png"
-      },
-      {
-        name: "Doct",
-        address: "Address",
-        image: "/doctors/doctor-1.png"
-      },
-      {
-        name: " Doctor",
-        address: "Address",
-        image: "/doctors/doctor-1.png"
-      },
-      {
-        name: "Doctor@Name",
-        address: "Address",
-        image: "/doctors/doctor-1.png"
-      },
-    ],
-    invalid_address: {
-      name: "DoctorOne",
-      address: "Addr",
-      image: "/doctors/doctor-1.png"
-    },
-    invalid_image: [
-      {
-        name: "DoctorOne",
-        address: "Address",
-        image: "doctors.txt"
-      },
-      {
-        name: "DoctorOne",
-        address: "Address",
-        image: "doctors/jpg"
-      },
-      {
-        name: "DoctorOne",
-        address: "Address",
-        image: "doctors"
-      },
-      {
-        name: "DoctorOne",
-        address: "Address",
-        image: "doctors."
-      },
-    ],
-    working_timestamps: [
-      {
-        name: "DoctorOne",
-        address: "Address",
-        image: "/doctors/doctor-1.png",
-        start_time: Time.now,
-        break_start_time: Time.now,
-        break_end_time: Time.now,
-        end_time: Time.now
-      },
-      {
-        name: "DoctorOne",
-        address: "Address",
-        image: "/doctors/doctor-1.png",
-        start_time: Time.now + 30.minutes,
-        break_start_time: Time.now + 20.minutes,
-        break_end_time: Time.now + 40.minutes,
-        end_time: Time.now + 1.hours
-      },
-      {
-        name: "DoctorOne",
-        address: "Address",
-        image: "/doctors/doctor-1.png",
-        start_time: Time.now,
-        break_start_time: Time.now + 40.minutes,
-        break_end_time: Time.now + 30.minutes,
-        end_time: Time.now + 1.hours
-      },
-      {
-        name: "DoctorOne",
-        address: "Address",
-        image: "/doctors/doctor-1.png",
-        start_time: Time.now,
-        break_start_time: Time.now + 20.minutes,
-        break_end_time: Time.now + 80.minutes,
-        end_time: Time.now + 1.hours
-      },
-    ]
-  } }
   describe "validations" do
+    let(:valid_attributes) { {
+      name: "DoctorOne",
+      address: "Address",
+      image: "/doctors/doctor-1.png"
+    } }
+    let(:invalid_attributes) { {
+      not_name: {
+        address: "Address",
+        image: "/doctors/doctor-1.png"
+      },
+      not_address: {
+        name: "DoctorOne",
+        image: "/doctors/doctor-1.png"
+      },
+      not_image: {
+        name: "DoctorOne",
+        address: "Address",
+      },
+      invalid_name: [
+        {
+          name: "1DoctorName",
+          address: "Address",
+          image: "/doctors/doctor-1.png"
+        },
+        {
+          name: "Doct",
+          address: "Address",
+          image: "/doctors/doctor-1.png"
+        },
+        {
+          name: " Doctor",
+          address: "Address",
+          image: "/doctors/doctor-1.png"
+        },
+        {
+          name: "Doctor@Name",
+          address: "Address",
+          image: "/doctors/doctor-1.png"
+        },
+      ],
+      invalid_address: {
+        name: "DoctorOne",
+        address: "Addr",
+        image: "/doctors/doctor-1.png"
+      },
+      invalid_image: [
+        {
+          name: "DoctorOne",
+          address: "Address",
+          image: "doctors.txt"
+        },
+        {
+          name: "DoctorOne",
+          address: "Address",
+          image: "doctors/jpg"
+        },
+        {
+          name: "DoctorOne",
+          address: "Address",
+          image: "doctors"
+        },
+        {
+          name: "DoctorOne",
+          address: "Address",
+          image: "doctors."
+        },
+      ],
+      working_timestamps: [
+        {
+          name: "DoctorOne",
+          address: "Address",
+          image: "/doctors/doctor-1.png",
+          start_time: Time.now,
+          break_start_time: Time.now,
+          break_end_time: Time.now,
+          end_time: Time.now
+        },
+        {
+          name: "DoctorOne",
+          address: "Address",
+          image: "/doctors/doctor-1.png",
+          start_time: Time.now + 30.minutes,
+          break_start_time: Time.now + 20.minutes,
+          break_end_time: Time.now + 40.minutes,
+          end_time: Time.now + 1.hours
+        },
+        {
+          name: "DoctorOne",
+          address: "Address",
+          image: "/doctors/doctor-1.png",
+          start_time: Time.now,
+          break_start_time: Time.now + 40.minutes,
+          break_end_time: Time.now + 30.minutes,
+          end_time: Time.now + 1.hours
+        },
+        {
+          name: "DoctorOne",
+          address: "Address",
+          image: "/doctors/doctor-1.png",
+          start_time: Time.now,
+          break_start_time: Time.now + 20.minutes,
+          break_end_time: Time.now + 80.minutes,
+          end_time: Time.now + 1.hours
+        },
+      ]
+    } }
+
     it "creates the doctor if valid values are passed" do
       expect { Doctor.create!(valid_attributes) }
         .to change(Doctor, :count).by(1)

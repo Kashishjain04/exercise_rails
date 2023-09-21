@@ -1,9 +1,14 @@
 <%= turbo_stream_from(:appointment) %>
-<% if flash[:error] %>
-<p class="alert alert-danger mt-4 mb-0" role="alert">
-  <%= flash[:error] %>
-</p>
-<% end %>
 <div data-controller="appointment" id="appointment_form">
+  <% if @appointment.errors.any? %>
+    <div class="text-danger mt-4">
+      <p><%= pluralize(@appointment.errors.count, "error") %> <%= t('.appointment_error_message') %></p>
+      <ul class="alert alert-danger">
+        <% @appointment.errors.each do |error| %>
+          <li class="ms-2"><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <%= render "form", appointment: @appointment %>
 </div>
