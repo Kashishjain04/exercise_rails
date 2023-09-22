@@ -15,7 +15,7 @@ Rails.application.configure do
     name: 'Kashish Jain',
     authentication: "plain",
     user_name: "jainabhishek7204@gmail.com",
-    password: "iyblivbyyemudrtb",
+    password: ENV['SMTP_PASSWORD'],
     enable_starttls_auto: true
   }
 

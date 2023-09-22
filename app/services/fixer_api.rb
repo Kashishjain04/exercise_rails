@@ -19,8 +19,7 @@ module FixerApi
     uri = URI("http://data.fixer.io/api/latest")
     symbols = User::CURRENCIES.join(',')
     params = {
-      # access_key: ENV['FIXER_API_KEY'],
-      access_key: '35a3ad0f2f253d37131b68cd1b5953fc',
+      access_key: ENV['FIXER_API_KEY'],
       symbols:
     }
     uri.query = URI.encode_www_form(params)

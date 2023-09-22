@@ -11,7 +11,7 @@ module MediApp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
-    config.time_zone = "Mumbai"
+    config.time_zone = "Kolkata"
     config.active_record.default_timezone = :local
 
     # overwrite form error behaviour
