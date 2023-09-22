@@ -66,8 +66,8 @@ en:
       doctor_name: "Doctor Name:"
       appointment_time: "Appointment Time:"
       app_title: "Medi App"
-    completed:
-      subject: "Medi App Consultation Complete"
+    receipt:
+      subject: "Medi App Appointment Receipt"
       mail_body_1: "Thank you for choosing"
       mail_body_2: "for your consultation."
       app_title: "Medi App"

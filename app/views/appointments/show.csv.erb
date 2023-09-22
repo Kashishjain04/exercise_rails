@@ -1,2 +1,2 @@
 Appointment Id, Patient Name, Patient Email, Doctor Name, Doctor Address, Time of Meeting, Appointment Fees
-"<%= @appointment.id %>", "<%= @appointment.user.name %>", "<%= @appointment.user.email %>", "<%= @appointment.doctor.name %>", "<%= @appointment.doctor.address %>", "<%= parse_time(@appointment.date_time, 4) %>", "<%= parse_appointment_fees(@appointment) %>"
+"<%= @appointment.id %>", "<%= @appointment.user.name %>", "<%= @appointment.user.email %>", "<%= @appointment.doctor.name %>", "<%= @appointment.doctor.address %>", "<%= parse_appointment_time(@appointment.date_time, 4) %>", "<%= parse_appointment_fees(@appointment) %>"

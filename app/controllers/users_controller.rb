@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include Authentication
+
   # GET /users/new
   def new
     user = get_session_user
@@ -11,11 +13,10 @@ class UsersController < ApplicationController
 
   # POST /users or /users.json
   def create
-    @user = User.login_or_signup(user_params)
+    @user = login_or_signup(user_params)
 
     respond_to do |format|
-      if @user.errors.none? && @user.save
-        session[:user_id] = @user.id
+      if @user.save
         format.html { redirect_to appointments_url }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -26,8 +27,6 @@ class UsersController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  # Only allow a list of trusted parameters through.
   def user_params
     params.require(:user).permit(:name, :email, :preferred_currency)
   end

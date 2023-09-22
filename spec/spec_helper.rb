@@ -1,9 +1,11 @@
 RSpec.shared_context "Global helpers" do
-  let(:user1) { create(:user, name: 'UserOne', email: 'one@user.com') }
-  let(:user2) { create(:user, name: 'UserTwo', email: 'two@user.com') }
-  let(:doctor1) { create(:doctor, name: 'DoctorOne', image: '/doctors/doctor-1.png') }
-  let(:doctor2) { create(:doctor, name: 'DoctorTwo', image: '/doctors/doctor-2.png') }
-  let(:appointment1) { create(:appointment) }
+  let(:user) { create(:user) }
+  let(:doctor) { create(:doctor) }
+  let(:appointment) { create(:appointment) }
+  # let(:user2) { create(:user, name: 'UserTwo', email: 'two@user.com') }
+  # let(:doctor1) { create(:doctor, name: 'DoctorOne', image: '/doctors/doctor-1.png') }
+  # let(:doctor2) { create(:doctor, name: 'DoctorTwo', image: '/doctors/doctor-2.png') }
+  # let(:appointment1) { create(:appointment) }
 end
 
 RSpec.configure do |config|
@@ -25,6 +27,7 @@ RSpec.configure do |config|
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
   config.before(:each) do
+    Timecop.freeze(DateTime.now.beginning_of_day + 9.hours)
     fixer_response = OpenStruct.new(
       body: {
         rates: {

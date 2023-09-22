@@ -3,11 +3,13 @@ require 'payment_gateway'
 class Appointment < ApplicationRecord
   belongs_to :doctor
   belongs_to :user
-  validates_presence_of :date_time, :amount_inr, :currency_rates, on: :create
-  validate :future_date_time, on: :create
-  validate :date_time_is_valid_slot, on: :create
-  validates :amount_inr, numericality: { greater_than_or_equal_to: 0.01 }, on: :create
-  validate :currency_rates_format, on: :create
+
+  validates_presence_of :date_time, :amount_inr, :currency_rates
+  validates :amount_inr, numericality: { greater_than_or_equal_to: 0.01 }
+  validate :future_date_time
+  validate :date_time_is_valid_slot
+  validate :currency_rates_format
+
   after_destroy :send_cancelled_mail
 
   APPOINTMENT_PRICE_INR = 500
@@ -15,39 +17,33 @@ class Appointment < ApplicationRecord
   COMPLETION_MAIL_DELIVERY = 2.hours
 
   private
-
   def future_date_time
-    if date_time.present? && date_time < DateTime.now
-      errors.add(:date_time, "must be in future")
-      throw :abort
-    end
+    errors.add(:date_time,
+               "must be in future") unless date_time&.after?(DateTime.now)
   end
 
   def date_time_is_valid_slot
     if date_time.present? && doctor.present?
-      date = Date.parse(date_time.to_s).in_time_zone("Kolkata")
+      date = Date.parse(date_time.to_s).in_time_zone(TIMEZONE)
       slots = doctor.available_slots[date]
-      unless date_time.in? slots
-        errors.add(:date_time, "must be a valid slot")
-        throw :abort
-      end
+
+      errors.add(:date_time,
+                 "must be a valid slot") unless date_time.in? slots
     end
   end
 
   def date_time_more_than_half_hour
-    if date_time.present? && (date_time - DateTime.now) <= CANCEL_DEADLINE
-      errors.add(:date_time, "cancellation window closed")
-      throw :abort
-    end
+    deadline = DateTime.now - CANCEL_DEADLINE
+
+    errors.add(:date_time,
+               "cancellation window closed") unless date_time&.before?(deadline)
   end
 
   def currency_rates_format
     if currency_rates.present?
       User::CURRENCIES.each do |currency|
-        if currency_rates[currency].nil?
-          errors.add(:currency_rates, "conversion for #{currency} is not present")
-          throw :abort
-        end
+        errors.add(:currency_rates,
+                   "conversion for #{currency} is not present") if currency_rates[currency].nil?
       end
     end
   end

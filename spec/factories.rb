@@ -14,7 +14,7 @@ FactoryBot.define do
   factory :appointment do
     user { create(:user) }
     doctor { create(:doctor) }
-    date_time { self.doctor.available_slots.values.first[0] }
+    date_time { self.doctor.available_slots.values.first.first }
     amount_inr { 500 }
     currency_rates { { INR: 88.686078,
                        USD: 0.01203509078,

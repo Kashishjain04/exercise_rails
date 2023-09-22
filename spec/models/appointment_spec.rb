@@ -1,77 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe Appointment, type: :model do
-  let(:valid_params) {
-    {
-      user_id: user1.id,
-      doctor_id: doctor1.id,
-      date_time: doctor1.available_slots.values.first[0],
-      amount_inr: 500,
-      currency_rates: FixerApi.today_rates
-    }
-  }
-  let(:invalid_params) { [
-    {
-      user_id: user1.id,
-      doctor_id: doctor1.id,
-      date_time: DateTime.now - 1.seconds,
-      amount_inr: 500,
-      currency_rates: FixerApi.today_rates
-    },
-    {
-      user_id: user1.id,
-      doctor_id: doctor1.id,
-      date_time: doctor1.available_slots.values.first[0] + 10.minutes,
-      amount_inr: 500,
-      currency_rates: FixerApi.today_rates
-    }
+  let(:appointment) { create(:appointment) }
+  let(:invalid_date_times) { [
+    DateTime.now - 1.hours,
+    doctor.available_slots.values.first[0] + 10.minutes
   ] }
 
+  describe 'associations' do
+    it { should belong_to(:user).class_name('User') }
+    it { should belong_to(:doctor).class_name('Doctor') }
+  end
+
   describe "validations" do
+    subject { appointment }
     context "presence" do
-      it "validates presence of doctor" do
-        expect { Appointment.create!(**valid_params.except(:doctor_id)) }
-          .to raise_error(ActiveRecord::RecordInvalid)
-      end
-      it "validates presence of user" do
-        expect { Appointment.create!(**valid_params.except(:user_id)) }
-          .to raise_error(ActiveRecord::RecordInvalid)
-      end
-      it "validates presence of date_time" do
-        expect { Appointment.create!(**valid_params.except(:date_time)) }
-          .to raise_error(ActiveRecord::RecordInvalid)
-      end
-      it "validates presence of amount_inr" do
-        expect { Appointment.create!(**valid_params.except(:amount_inr)) }
-          .to raise_error(ActiveRecord::RecordInvalid)
-      end
-      it "validates presence of currency_rates" do
-        expect { Appointment.create!(**valid_params.except(:currency_rates)) }
-          .to raise_error(ActiveRecord::RecordInvalid)
+      [:date_time, :amount_inr, :currency_rates].each do |field|
+        it { should validate_presence_of(field) }
       end
     end
-
-    it "throws an error for past date_time" do
-      expect { Appointment.create!(**invalid_params[0]) }
-        .to raise_error(ActiveRecord::RecordInvalid)
-    end
-
-    it "throws an error if date_time is not in doctor's slots" do
-      expect { Appointment.create!(**invalid_params[1]) }
-        .to raise_error(ActiveRecord::RecordInvalid)
-    end
-
-    it "throws an error if invalid amount is passed" do
-      expect { Appointment.create!(**valid_params, amount_inr: -1) }
-        .to raise_error(ActiveRecord::RecordInvalid)
-    end
-
-    it "throws an error if invalid currency is passed" do
-      expect { Appointment.create!(
-        **valid_params,
-        currency_rates: FixerApi.today_rates.except("USD")
-      ) }
-        .to raise_error(ActiveRecord::RecordInvalid)
-    end
+    it { should validate_numericality_of(:amount_inr).is_greater_than_or_equal_to(0.01) }
+    it { should_not allow_values(*invalid_date_times).for(:date_time) }
+    it { should_not allow_value(FixerApi.today_rates.except("USD")).for(:currency_rates) }
   end
 end

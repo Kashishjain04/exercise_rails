@@ -1,4 +1,6 @@
 class AppointmentsController < ApplicationController
+  include Authentication
+
   before_action :set_appointment, only: %i[ show destroy ]
   before_action :set_currency_rates, only: %i[ new create ]
   before_action :authenticate, only: %i[ index show destroy ]
@@ -39,7 +41,6 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments/new
   def new
-    @rates = FixerApi.today_rates
     @appointment = Appointment.new(doctor_id: params[:doctor_id])
     @slots = @appointment.doctor.available_slots
     session_user = get_session_user
@@ -48,28 +49,27 @@ class AppointmentsController < ApplicationController
 
   # POST /appointments or /appointments.json
   def create
-    new_user = User.login_or_signup(appointment_params[:user])
+    user = login_or_signup(appointment_params[:user])
+    doctor = Doctor.find(appointment_params[:doctor_id])
 
     @appointment = Appointment.new(
-      user: new_user,
-      doctor: Doctor.find(appointment_params[:doctor_id]),
+      user: user,
+      doctor: doctor,
       date_time: appointment_params[:date_time],
       amount_inr: Appointment::APPOINTMENT_PRICE_INR,
       currency_rates: @rates
     )
 
-    if new_user.errors.any?
-      @appointment.errors.merge!(new_user.errors)
+    if user.errors.any?
+      @appointment.errors.merge!(user.errors)
       @appointment.build_user
-    else
-      session[:user_id] = new_user.id
     end
 
     respond_to do |format|
-      if @appointment.errors.none? && @appointment.save
+      if @appointment.save
         format.turbo_stream { PaymentJob.perform_now(@appointment) }
       else
-        @slots = @appointment.doctor.available_slots
+        @slots = doctor.available_slots
         format.html { render :new,
                              params: { doctor_id: appointment_params[:doctor_id] },
                              status: :unprocessable_entity }
@@ -96,17 +96,10 @@ class AppointmentsController < ApplicationController
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
   def set_appointment
     @user = get_session_user
     return if @user.nil?
-    begin
-      @appointment = Appointment.find_by(id: params[:id], user_id: @user.id)
-    rescue ActiveRecord::RecordNotFound => e
-      @appointment = nil
-      # render :text => 'Not Found', :status => '404'
-    end
+    @appointment = Appointment.find_by(id: params[:id], user_id: @user.id)
   end
 
   def set_currency_rates
@@ -116,8 +109,7 @@ class AppointmentsController < ApplicationController
       redirect_to doctors_index_path
     end
   end
-
-  # Only allow a list of trusted parameters through.
+  
   def appointment_params
     params.require(:appointment).permit(
       :date_time,

@@ -1,52 +1,36 @@
 class Doctor < ApplicationRecord
+  DOCTOR_MAXIMUM_AVAILABILITY = 7
+  has_many :appointments
+
   validates_presence_of :name, :address, :image
-  validates :name, presence: true, format: /\A[A-Za-z][\w ]{5,}\z/
+  validates :name, presence: true, format: NAME_REGEXP
   validates :address, presence: true, format: /\A.{6,}/
   validates :image, presence: true, format: /\A.+\.(gif|png|jpg|jpeg)\z/
-  has_many :appointments
-  before_destroy :ensure_not_appointed
-  validate :working_timestamps
+  validate :validate_working_timestamps
 
-  MAX_DAYS = 7
+  before_destroy :ensure_not_appointed
 
   def available_slots
-    booked_slots = appointments.all.map(&:date_time)
     slots = {}
+    DOCTOR_MAXIMUM_AVAILABILITY.times.each do |i|
+      date = Date.today.in_time_zone(TIMEZONE) + i.days
 
-    MAX_DAYS.times.each do |i|
-      current_date = Date.today.in_time_zone("Kolkata") + i.days
-      temp_slots = []
+      start_timestamp = time_of_day(date, start_time)
+      end_timestamp = time_of_day(date, end_time)
 
-      start_timestamp = get_time_on_day(current_date, start_time)
-      break_start_timestamp = get_time_on_day(current_date, break_start_time)
-      break_end_timestamp = get_time_on_day(current_date, break_end_time)
-      end_timestamp = get_time_on_day(current_date, end_time)
+      break_start_timestamp = time_of_day(date, break_start_time)
+      break_end_timestamp = time_of_day(date, break_end_time)
 
-      time = start_timestamp
+      all_available_slots = slots_between(start_timestamp, end_timestamp)
+                              .select! { |slot| slot_available?(slot) }
 
-      while time < break_start_timestamp
-        if time > DateTime.now && !booked_slots.include?(time)
-          temp_slots.push(time)
-        end
-        time += 1.hours
-      end
-
-      time = break_end_timestamp
-
-      while time < end_timestamp
-        if time > DateTime.now && !booked_slots.include?(time)
-          temp_slots.push(time)
-        end
-        time += 1.hours
-      end
-
-      slots[current_date] = temp_slots unless temp_slots.empty?
+      slots[date] = all_available_slots unless all_available_slots.empty?
     end
     slots
   end
 
   def next_available_today
-    today = Date.today.in_time_zone("Kolkata")
+    today = Date.today.in_time_zone(TIMEZONE)
     today_slots = available_slots[today]
 
     return nil if today_slots.nil? || today_slots.empty?
@@ -54,8 +38,26 @@ class Doctor < ApplicationRecord
   end
 
   private
-  def get_time_on_day(date, time)
+
+  def time_of_day(date, time)
     date.to_datetime + time.seconds_since_midnight.seconds
+  end
+
+  def booked_slots
+    appointments.all.map(&:date_time)
+  end
+
+  def slot_available?(slot)
+    date = slot.beginning_of_day
+
+    break_start_timestamp = time_of_day(date, break_start_time)
+    break_end_timestamp = time_of_day(date, break_end_time)
+
+    slot.future? && !booked_slots.include?(slot) && !slot.between_exclusive?(break_start_timestamp, break_end_timestamp)
+  end
+
+  def slots_between(start_time, end_time)
+    start_time.step(end_time, 1.0 / 24).to_a
   end
 
   def ensure_not_appointed
@@ -65,7 +67,7 @@ class Doctor < ApplicationRecord
     end
   end
 
-  def working_timestamps
+  def validate_working_timestamps
     unless break_end_time < end_time
       errors.add(:break_end_time, "Doctor's working timestamps are invalid")
       throw :abort

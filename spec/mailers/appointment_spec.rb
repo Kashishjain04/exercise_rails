@@ -1,8 +1,10 @@
 require "rails_helper"
 
 RSpec.describe AppointmentMailer, type: :mailer do
+  let(:appointment) { create(:appointment) }
+
   describe "booked" do
-    let(:mail) { AppointmentMailer.booked(appointment1) }
+    let(:mail) { AppointmentMailer.booked(appointment) }
 
     it "renders the headers" do
       expect(mail.subject).to eq("Medi App Appointment Booked")
@@ -16,7 +18,7 @@ RSpec.describe AppointmentMailer, type: :mailer do
   end
 
   describe "cancelled" do
-    let(:mail) { AppointmentMailer.cancelled(appointment1.as_json) }
+    let(:mail) { AppointmentMailer.cancelled(appointment.as_json) }
 
     it "renders the headers" do
       expect(mail.subject).to eq("Medi App Appointment Cancelled")
@@ -29,11 +31,11 @@ RSpec.describe AppointmentMailer, type: :mailer do
     end
   end
 
-  describe "completed" do
-    let(:mail) { AppointmentMailer.completed(appointment1) }
+  describe "receipt" do
+    let(:mail) { AppointmentMailer.receipt(appointment) }
 
     it "renders the headers" do
-      expect(mail.subject).to eq("Medi App Consultation Complete")
+      expect(mail.subject).to eq("Medi App Appointment Receipt")
       expect(mail.to).to eq(["user@email.com"])
       expect(mail.from).to eq(["jainabhishek7204@gmail.com"])
     end

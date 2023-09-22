@@ -19,13 +19,13 @@
         justify-content-start align-items-center fw-semibold border-end"
       >
         <%= image_tag 'icons/calendar_light', alt: "Calendar", size: 13 %>
-        <%= parse_time(appointment.date_time, 2) %>
+        <%= parse_appointment_time(appointment.date_time, 2) %>
       </p>
       <p
         class="my-0 d-flex flex-row gap-3 justify-content-end align-items-center fw-semibold"
       >
         <%= image_tag 'icons/clock', alt: "Clock", size: 13 %>
-        <%= parse_time(appointment.date_time, 3) %>
+        <%= parse_appointment_time(appointment.date_time, 3) %>
       </p>
     </div>
     <div class="flex-grow-1"></div>

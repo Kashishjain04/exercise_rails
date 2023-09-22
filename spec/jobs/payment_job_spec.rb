@@ -3,6 +3,11 @@ require 'rails_helper'
 RSpec.describe PaymentJob, type: :job do
   it "broadcasts using turbo stream" do
     appointment = create(:appointment)
+    expect(Turbo::StreamsChannel).to receive(:broadcast_render_to)
+                                       .with(:appointment,
+                                             partial: 'appointments/processing_payment'
+                                       )
+
     expect(Turbo::StreamsChannel).to receive(:broadcast_render_later_to)
                                        .with(:appointment,
                                              partial: 'appointments/payment_success',

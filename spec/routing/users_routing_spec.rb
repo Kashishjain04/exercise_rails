@@ -2,12 +2,7 @@ require "rails_helper"
 
 RSpec.describe UsersController, type: :routing do
   describe "routing" do
-    it "routes to #new" do
-      expect(get: "/login").to route_to("users#new")
-    end
-
-    it "routes to #create" do
-      expect(post: "/users").to route_to("users#create")
-    end
+    it { should route(:get, '/login').to(action: :new) }
+    it { should route(:post, '/users').to(action: :create) }
   end
 end

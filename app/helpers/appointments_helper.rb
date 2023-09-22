@@ -1,19 +1,16 @@
 module AppointmentsHelper
-  def convert_currency(amount_inr, rates, currency)
-    (amount_inr * rates[currency]).round(2)
-  end
-
-  def print_appointment_price(amount_inr, rates, currency)
+  def print_appointment_price(rates, currency)
+    amount_inr = Appointment::APPOINTMENT_PRICE_INR
     actual_price = convert_currency(amount_inr, rates, currency)
     "#{actual_price} #{currency}"
   end
 
   def parse_appointment_fees(appointment)
     currency = appointment.user.preferred_currency
-    "#{currency} #{convert_currency(appointment.amount_inr, appointment.currency_rates, currency)}/-"
+    "#{currency} #{convert_currency(appointment.amount_inr, appointment.currency_rates, currency)}"
   end
 
-  def parse_time(date_time, format)
+  def parse_appointment_time(date_time, format)
     day_string = if date_time.today?
                    t('appointments.helpers.today')
                  elsif date_time.tomorrow?
@@ -33,5 +30,10 @@ module AppointmentsHelper
     when 4
       "#{date_string} #{date_time.strftime("%B, %l:%M %p")}"
     end
+  end
+
+  private
+  def convert_currency(amount_inr, rates, currency)
+    (amount_inr * rates[currency]).round(2)
   end
 end

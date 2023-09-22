@@ -11,7 +11,7 @@ class AppointmentMailer < ApplicationMailer
     mail to: appointment.user.email
   end
 
-  def completed(appointment)
+  def receipt(appointment)
     @appointment = appointment
     mail to: appointment.user.email
   end
