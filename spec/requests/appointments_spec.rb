@@ -111,6 +111,11 @@ RSpec.describe "/appointments", type: :request do
       end
 
       context "appointment belongs to the user" do
+        it do
+          get appointment_path @appointment
+          should render_template("appointments/show")
+        end
+
         it "prints the receipt in csv" do
           get appointment_path @appointment, format: :csv
           expect (response.header["Content-Disposition"]).match("receipt-#{@appointment.id}.csv")

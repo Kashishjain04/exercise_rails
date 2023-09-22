@@ -50,6 +50,8 @@ en:
       something_went_wrong: "Something went wrong."
     create:
       something_went_wrong: "Something went wrong."
+    show:
+      your_appointment_details: "Your Appointment Details"
   appointment_mailer:
     booked:
       subject: "Medi App Appointment Booked"
@@ -74,8 +76,7 @@ en:
       appointment_details: "Here are your appointment details"
       doctor_name: "Doctor Name:"
       appointment_time: "Appointment Time:"
-      pfa_your_invoice: "PFA: Your Invoice"
-      download_your_invoice: "Download Your Invoice"
+      more_details: "More Details"
   users:
     form:
       enter_name: "Enter Name"
