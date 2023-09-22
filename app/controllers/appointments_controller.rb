@@ -67,7 +67,7 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       if @appointment.save
-        format.turbo_stream { PaymentJob.perform_now(@appointment) }
+        format.turbo_stream { PaymentJob.perform_later(@appointment) }
       else
         @slots = doctor.available_slots
         format.html { render :new,

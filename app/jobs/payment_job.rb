@@ -1,4 +1,5 @@
 class PaymentJob < ApplicationJob
+  PAYMENT_WAIT_TIME = 1
   queue_as :default
 
   def perform(appointment)
@@ -6,6 +7,7 @@ class PaymentJob < ApplicationJob
       :appointment,
       partial: 'appointments/processing_payment')
 
+    sleep PAYMENT_WAIT_TIME
     PaymentGateway.make_payment
 
     AppointmentMailer.booked(appointment).deliver_later
