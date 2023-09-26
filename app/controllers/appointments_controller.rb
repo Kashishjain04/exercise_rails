@@ -52,6 +52,8 @@ class AppointmentsController < ApplicationController
     user = login_or_signup(appointment_params[:user])
     doctor = Doctor.find(appointment_params[:doctor_id])
 
+    # @appointment = Appointment.new()
+
     @appointment = Appointment.new(
       user: user,
       doctor: doctor,
@@ -66,7 +68,7 @@ class AppointmentsController < ApplicationController
     end
 
     respond_to do |format|
-      if @appointment.save
+      if @appointment.errors.none? && @appointment.save
         format.turbo_stream { PaymentJob.perform_later(@appointment) }
       else
         @slots = doctor.available_slots
