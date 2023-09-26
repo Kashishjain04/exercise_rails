@@ -61,8 +61,8 @@ RSpec.describe Doctor, type: :model do
 
   describe "available_slots" do
     context "slots are available for today" do
-      it "returns slots array of size: #{Doctor::DOCTOR_MAXIMUM_AVAILABILITY}" do
-        expect(doctor.available_slots.length).to eql(Doctor::DOCTOR_MAXIMUM_AVAILABILITY)
+      it "returns slots containing today" do
+        expect(doctor.available_slots.keys.first.today?).to be_truthy
       end
     end
 
@@ -76,8 +76,8 @@ RSpec.describe Doctor, type: :model do
         end
       end
 
-      it "returns slots array of size: #{Doctor::DOCTOR_MAXIMUM_AVAILABILITY - 1}" do
-        expect(doctor.available_slots.length).to eql(Doctor::DOCTOR_MAXIMUM_AVAILABILITY - 1)
+      it "returns slots not containing today" do
+        expect(doctor.available_slots.keys.first.today?).to be_falsey
       end
     end
   end

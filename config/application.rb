@@ -12,6 +12,7 @@ module MediApp
     config.load_defaults 7.0
 
     config.time_zone = "Kolkata"
+    config.active_record.default_timezone = :local
 
     # overwrite form error behaviour
     config.action_view.field_error_proc = Proc.new { |html_tag, instance|

@@ -15,6 +15,8 @@ class Doctor < ApplicationRecord
     DOCTOR_MAXIMUM_AVAILABILITY.times.each do |i|
       date = DateTime.now.beginning_of_day + i.days
 
+      next if date.cwday == 7
+
       start_timestamp = time_of_day(date, start_time)
       end_timestamp = time_of_day(date, end_time)
 
