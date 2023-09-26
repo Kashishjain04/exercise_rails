@@ -10,16 +10,27 @@ export default class extends Controller {
         "second1", "second0"
     ]
 
-    countdown() {
+    parseTime() {
         const dateTime = new Date(this.dateTimeTarget.innerText)
 
-        this.interval = setInterval(() => {
-            const secondsUntil = (dateTime - Date.now()) / 1000;
-            const days = Math.floor(secondsUntil / (60 * 60 * 24));
-            const hours = Math.floor((secondsUntil % (60 * 60 * 24)) / (60 * 60));
-            const minutes = Math.floor((secondsUntil % (60 * 60)) / (60));
-            const seconds = Math.floor(secondsUntil % (60))
+        const miliSecondsInSecond = 1000
+        const secondsInDay = 60 * 60 * 24
+        const secondsInHour = 60 * 60
+        const secondsInMinute = 60
 
+        const secondsUntil = (dateTime - Date.now()) / miliSecondsInSecond;
+        const days = Math.floor(secondsUntil / secondsInDay);
+        const hours = Math.floor((secondsUntil % secondsInDay) / secondsInHour);
+        const minutes = Math.floor((secondsUntil % secondsInHour) / secondsInMinute);
+        const seconds = Math.floor(secondsUntil % secondsInMinute)
+
+        return {days, hours, minutes, seconds}
+    }
+
+    countdown() {
+        const [days, hours, minutes, seconds] = this.parseTime()
+
+        this.interval = setInterval(() => {
             this.day1Target.innerText = Math.floor(days / 10);
             this.day0Target.innerText = days % 10;
 
