@@ -5,5 +5,6 @@ Patient Name: <%= @appointment.user.name %>
 Patient Email: <%= @appointment.user.email %>
 Doctor Name: <%= @appointment.doctor.name %>
 Doctor Address: <%= @appointment.doctor.address %>
+Doctor City: <%= @appointment.doctor.city %>
 Time of Meeting: <%= parse_appointment_time(@appointment.date_time, 4) %>
 Appointment Fees: <%= parse_appointment_fees(@appointment) %>"

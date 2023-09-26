@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :doctor do
     name { "DoctorOne" }
     address { "Somewhere Doctor Address" }
+    city { "Some City" }
     image { "doctors/doctor-1.png" }
   end
 

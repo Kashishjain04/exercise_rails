@@ -24,7 +24,7 @@ class Appointment < ApplicationRecord
 
   def date_time_is_valid_slot
     if date_time.present? && doctor.present?
-      date = DateTime.now.beginning_of_day
+      date = date_time.to_datetime.beginning_of_day
       slots = doctor.available_slots[date]
 
       errors.add(:date_time,

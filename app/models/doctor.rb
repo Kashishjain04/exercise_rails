@@ -2,10 +2,10 @@ class Doctor < ApplicationRecord
   DOCTOR_MAXIMUM_AVAILABILITY = 7
   has_many :appointments
 
-  validates_presence_of :name, :address, :image
-  validates :name, presence: true, format: NAME_REGEXP
-  validates :address, presence: true, format: /\A.{6,}/
-  validates :image, presence: true, format: /\A.+\.(gif|png|jpg|jpeg)\z/
+  validates_presence_of :name, :address, :image, :city
+  validates :name, format: NAME_REGEXP
+  validates :address, format: /\A.{6,}/
+  validates :image, format: /\A.+\.(gif|png|jpg|jpeg)\z/
   validate :validate_working_timestamps
 
   before_destroy :ensure_not_appointed
@@ -31,12 +31,11 @@ class Doctor < ApplicationRecord
 
     today_slots = available_slots[today]
 
-    return nil if today_slots.nil? || today_slots.empty?
+    return nil if today_slots.nil?
     today_slots[0].strftime("%l:%M %p")
   end
 
   private
-
   def time_of_day(date, time)
     date + time.seconds_since_midnight.seconds
   end
