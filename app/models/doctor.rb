@@ -13,13 +13,10 @@ class Doctor < ApplicationRecord
   def available_slots
     slots = {}
     DOCTOR_MAXIMUM_AVAILABILITY.times.each do |i|
-      date = Date.today.in_time_zone(TIMEZONE) + i.days
+      date = DateTime.now.beginning_of_day + i.days
 
       start_timestamp = time_of_day(date, start_time)
       end_timestamp = time_of_day(date, end_time)
-
-      break_start_timestamp = time_of_day(date, break_start_time)
-      break_end_timestamp = time_of_day(date, break_end_time)
 
       all_available_slots = slots_between(start_timestamp, end_timestamp)
                               .select! { |slot| slot_available?(slot) }
@@ -30,7 +27,8 @@ class Doctor < ApplicationRecord
   end
 
   def next_available_today
-    today = Date.today.in_time_zone(TIMEZONE)
+    today = DateTime.now.beginning_of_day
+
     today_slots = available_slots[today]
 
     return nil if today_slots.nil? || today_slots.empty?
@@ -40,7 +38,7 @@ class Doctor < ApplicationRecord
   private
 
   def time_of_day(date, time)
-    date.to_datetime + time.seconds_since_midnight.seconds
+    date + time.seconds_since_midnight.seconds
   end
 
   def booked_slots
