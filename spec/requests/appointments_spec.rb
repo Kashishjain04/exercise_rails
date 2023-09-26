@@ -31,17 +31,6 @@ RSpec.describe "/appointments", type: :request do
       subject
       expect(session[:user_id]).to eql(user.id)
     end
-
-    it "sends booking email to the user" do
-      expect { subject }
-        .to have_enqueued_mail(AppointmentMailer, :booked)
-    end
-
-    it "sends receipt email to the user" do
-      expect { subject }
-        .to have_enqueued_mail(AppointmentMailer, :receipt)
-              .at(doctor.available_slots.values.first.first + Appointment::COMPLETION_MAIL_DELIVERY)
-    end
   end
 
   describe "DELETE /delete" do

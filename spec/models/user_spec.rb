@@ -4,7 +4,7 @@ RSpec.describe User, type: :model do
   describe "validations" do
     let(:invalid_attributes) { {
       email: ["one@user.", "one@.com", "one@", "@user.com", "user.com"],
-      name: ["1UserName", "User", " User", "User@Name"],
+      name: ["1UserName", "Us", " User", "User@Name"],
       preferred_currency: ["CAD"]
     } }
 

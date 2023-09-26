@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Doctor, type: :model do
   let(:invalid_attributes) { {
-    name: ["1DoctorName", "Doct", " Doctor", "Doctor@Name"],
+    name: ["1DoctorName", "Do", " Doctor", "Doctor@Name"],
     address: ["Addr"],
     image: ["doctors.txt", "doctors/jpg", "doctors", "doctors."],
     working_timestamps: [
