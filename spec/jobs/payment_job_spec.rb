@@ -1,8 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe PaymentJob, type: :job do
-  let(:appointment) { create(:appointment) }
   subject { PaymentJob.perform_now(appointment) }
+
+  before do
+    allow_any_instance_of(PaymentJob).to receive(:sleep)
+  end
 
   it "broadcasts using turbo stream" do
     expect(Turbo::StreamsChannel).to receive(:broadcast_render_to)
