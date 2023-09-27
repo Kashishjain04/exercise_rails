@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe AppointmentMailer, type: :mailer do
-  let(:appointment) { create(:appointment) }
-
   describe "booked" do
     let(:mail) { AppointmentMailer.booked(appointment) }
 

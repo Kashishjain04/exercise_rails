@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Appointment, type: :model do
-  let(:appointment) { create(:appointment) }
   let(:invalid_doctor) { create(:doctor, available: false) }
   let(:invalid_date_times) { [
     DateTime.now - 1.hours,
