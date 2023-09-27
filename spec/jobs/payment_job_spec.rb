@@ -4,11 +4,11 @@ RSpec.describe PaymentJob, type: :job do
   subject { PaymentJob.perform_now(appointment) }
 
   before do
-    allow_any_instance_of(PaymentJob).to receive(:sleep)
+    allow(PaymentGateway).to receive(:make_payment)
   end
 
   it "broadcasts using turbo stream" do
-    expect(Turbo::StreamsChannel).to receive(:broadcast_render_to)
+    expect(Turbo::StreamsChannel).to receive(:broadcast_render_later_to)
                                        .with(:appointment,
                                              partial: 'appointments/processing_payment'
                                        )
