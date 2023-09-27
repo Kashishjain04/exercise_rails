@@ -60,6 +60,13 @@ RSpec.describe Doctor, type: :model do
   end
 
   describe "available_slots" do
+    context "doctor is not available" do
+      let(:doctor) { create(:doctor, available: false) }
+      it "returns empty hash" do
+        expect(doctor.available_slots).to eq({})
+      end
+    end
+
     context "slots are available for today" do
       it "returns slots containing today" do
         expect(doctor.available_slots.keys.first.today?).to be_truthy

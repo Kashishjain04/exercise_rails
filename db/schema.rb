@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_26_113911) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_27_042225) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -37,6 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_113911) do
     t.time "break_start_time", default: "2000-01-01 13:00:00"
     t.time "break_end_time", default: "2000-01-01 14:00:00"
     t.string "city", null: false
+    t.boolean "available", default: true
   end
 
   create_table "users", force: :cascade do |t|

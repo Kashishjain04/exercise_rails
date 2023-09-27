@@ -42,6 +42,12 @@ class AppointmentsController < ApplicationController
   # GET /appointments/new
   def new
     @appointment = Appointment.new(doctor_id: params[:doctor_id])
+
+    return redirect_to doctors_index_path,
+                       flash: { error: t('.invalid_doctor_id') } if @appointment.doctor.nil?
+    return redirect_to doctors_index_path,
+                       flash: { error: t('.doctor_not_available') } unless @appointment.doctor.available
+
     @slots = @appointment.doctor.available_slots
     session_user = get_session_user
     session_user ? @appointment.user = session_user : @appointment.build_user
@@ -51,8 +57,6 @@ class AppointmentsController < ApplicationController
   def create
     user = login_or_signup(appointment_params[:user])
     doctor = Doctor.find(appointment_params[:doctor_id])
-
-    # @appointment = Appointment.new()
 
     @appointment = Appointment.new(
       user: user,
@@ -98,6 +102,7 @@ class AppointmentsController < ApplicationController
   end
 
   private
+
   def set_appointment
     @user = get_session_user
     return if @user.nil?
@@ -107,11 +112,11 @@ class AppointmentsController < ApplicationController
   def set_currency_rates
     @rates = FixerApi.today_rates
     if @rates.nil?
-      flash[:error] = "Something went wrong"
+      flash[:error] = t('.something_went_wrong')
       redirect_to doctors_index_path
     end
   end
-  
+
   def appointment_params
     params.require(:appointment).permit(
       :date_time,

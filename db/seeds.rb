@@ -38,6 +38,20 @@ Doctor.create!([
                    "break_end_time": DateTime.parse("14:00:00"),
                    "end_time": DateTime.parse("16:00:00")
                  },
+                 {
+                   "name": "Rosalyn Rodgers",
+                   "address": "Hr #1218 Ab St.",
+                   "city": "Perth",
+                   "image": "doctors/doctor-2.png",
+                   "available": false
+                 },
+                 {
+                   "name": "Rosalyn Rodgers",
+                   "address": "Ap #812B Rf St.",
+                   "city": "Melbourne",
+                   "image": "doctors/doctor-1.png",
+                   "available": false
+                 },
                ])
 
 

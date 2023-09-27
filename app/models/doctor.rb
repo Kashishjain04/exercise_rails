@@ -12,6 +12,8 @@ class Doctor < ApplicationRecord
 
   def available_slots
     slots = {}
+    return slots unless available
+
     DOCTOR_MAXIMUM_AVAILABILITY.times.each do |i|
       date = DateTime.now.beginning_of_day + i.days
 
@@ -61,7 +63,7 @@ class Doctor < ApplicationRecord
 
   def ensure_not_appointed
     unless appointments.empty?
-      errors.add(:base, "Appointment bookings present")
+      errors.add(:appointments, "bookings present")
       throw :abort
     end
   end

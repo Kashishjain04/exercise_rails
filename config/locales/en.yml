@@ -11,6 +11,8 @@ en:
     doctor:
       next_available: "Next Available"
       not_available_today: "Not Available Today"
+      not_available: "Not Available"
+      book_visit: "Book Visit"
   appointments:
     helpers:
       today: "Today"
@@ -48,10 +50,13 @@ en:
     new:
       appointment_error_message: "prohibited this appointment from being created:"
       something_went_wrong: "Something went wrong."
+      invalid_doctor_id: "Invalid Doctor Id"
+      doctor_not_available: "Doctor not available"
     create:
       something_went_wrong: "Something went wrong."
     show:
       your_appointment_details: "Your Appointment Details"
+    something_went_wrong: "Something went wrong"
   appointment_mailer:
     booked:
       subject: "Medi App Appointment Booked"

@@ -9,6 +9,7 @@ class Appointment < ApplicationRecord
   validate :future_date_time
   validate :date_time_is_valid_slot
   validate :currency_rates_format
+  validate :doctor_to_be_available
 
   after_destroy :send_cancelled_mail
 
@@ -45,6 +46,12 @@ class Appointment < ApplicationRecord
         errors.add(:currency_rates,
                    "conversion for #{currency} is not present") if currency_rates[currency].nil?
       end
+    end
+  end
+
+  def doctor_to_be_available
+    if doctor.present?
+      errors.add(:doctor, "not Available") unless doctor.available
     end
   end
 

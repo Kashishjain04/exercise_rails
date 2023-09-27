@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Appointment, type: :model do
   let(:appointment) { create(:appointment) }
+  let(:invalid_doctor) { create(:doctor, available: false) }
   let(:invalid_date_times) { [
     DateTime.now - 1.hours,
     doctor.available_slots.values.first[0] + 10.minutes
@@ -22,5 +23,6 @@ RSpec.describe Appointment, type: :model do
     it { should validate_numericality_of(:amount_inr).is_greater_than_or_equal_to(0.01) }
     it { should_not allow_values(*invalid_date_times).for(:date_time) }
     it { should_not allow_value(FixerApi.today_rates.except("USD")).for(:currency_rates) }
+    it { should_not allow_value(invalid_doctor).for(:doctor) }
   end
 end
