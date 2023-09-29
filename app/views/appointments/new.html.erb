@@ -1,4 +1,4 @@
-<%= turbo_stream_from(:appointment) %>
+<%= turbo_stream_from("appointment-#{@uid}") %>
 <div data-controller="appointment" id="appointment_form">
   <% if @appointment.errors.any? %>
     <div class="text-danger mt-4">

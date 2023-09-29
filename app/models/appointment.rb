@@ -27,7 +27,7 @@ class Appointment < ApplicationRecord
       slots = doctor.available_slots[date]
 
       errors.add(:date_time,
-                 "must be a valid slot") unless !slots.nil? && date_time.in?(slots)
+                 "is not a valid slot") unless !slots.nil? && date_time.in?(slots)
     end
   end
 

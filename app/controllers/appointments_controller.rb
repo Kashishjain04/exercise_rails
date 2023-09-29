@@ -49,6 +49,7 @@ class AppointmentsController < ApplicationController
                        flash: { error: t('.doctor_not_available') } unless @appointment.doctor.available
 
     @slots = @appointment.doctor.available_slots
+    @uid = SecureRandom.uuid
     session_user = get_session_user
     session_user ? @appointment.user = session_user : @appointment.build_user
   end
@@ -57,6 +58,7 @@ class AppointmentsController < ApplicationController
   def create
     user = login_or_signup(appointment_params[:user])
     doctor = Doctor.find(appointment_params[:doctor_id])
+    @uid = appointment_params[:uid]
 
     @appointment = Appointment.new(
       user: user,
@@ -73,7 +75,7 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       if @appointment.errors.none? && @appointment.save
-        format.turbo_stream { PaymentJob.perform_later(@appointment) }
+        format.turbo_stream { PaymentJob.perform_later(@appointment, @uid) }
       else
         @slots = doctor.available_slots
         format.html { render :new,
@@ -119,6 +121,7 @@ class AppointmentsController < ApplicationController
 
   def appointment_params
     params.require(:appointment).permit(
+      :uid,
       :date_time,
       :doctor_id,
       user: [:name, :email, :preferred_currency]
