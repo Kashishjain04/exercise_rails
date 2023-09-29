@@ -5,7 +5,7 @@
       <p><%= pluralize(@appointment.errors.count, "error") %> <%= t('.appointment_error_message') %></p>
       <ul class="alert alert-danger">
         <% @appointment.errors.each do |error| %>
-          <li class="ms-2"><%= error.full_message %></li>
+          <li class="ms-2"><%= error.type %></li>
         <% end %>
       </ul>
     </div>

@@ -18,7 +18,7 @@ class Appointment < ApplicationRecord
   private
   def future_date_time
     errors.add(:date_time,
-               "must be in future") unless date_time&.after?(DateTime.now)
+               "Invalid appointment time") unless date_time&.after?(DateTime.now)
   end
 
   def date_time_is_valid_slot
@@ -27,7 +27,7 @@ class Appointment < ApplicationRecord
       slots = doctor.available_slots[date]
 
       errors.add(:date_time,
-                 "is not a valid slot") unless !slots.nil? && date_time.in?(slots)
+                 "Slot not available") unless !slots.nil? && date_time.in?(slots)
     end
   end
 
@@ -35,21 +35,21 @@ class Appointment < ApplicationRecord
     deadline = DateTime.now - CANCEL_DEADLINE
 
     errors.add(:date_time,
-               "cancellation window closed") unless date_time&.before?(deadline)
+               "Cancellation window closed") unless date_time&.before?(deadline)
   end
 
   def currency_rates_format
     if currency_rates.present?
       User::CURRENCIES.each do |currency|
         errors.add(:currency_rates,
-                   "conversion for #{currency} is not present") if currency_rates[currency].nil?
+                   "Conversion for #{currency} is not present") if currency_rates[currency].nil?
       end
     end
   end
 
   def doctor_to_be_available
     if doctor.present?
-      errors.add(:doctor, "not Available") unless doctor.available
+      errors.add(:doctor, "Doctor not available") unless doctor.available
     end
   end
 

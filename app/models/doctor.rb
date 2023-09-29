@@ -65,7 +65,7 @@ class Doctor < ApplicationRecord
 
   def ensure_not_appointed
     unless appointments.empty?
-      errors.add(:appointments, "bookings present")
+      errors.add(:appointments, "Appointment bookings already present")
       throw :abort
     end
   end
