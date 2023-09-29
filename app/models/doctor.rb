@@ -1,5 +1,7 @@
 class Doctor < ApplicationRecord
   DOCTOR_MAXIMUM_AVAILABILITY = 7
+  SUNDAY = 7
+
   has_many :appointments
 
   validates_presence_of :name, :address, :image, :city
@@ -17,7 +19,7 @@ class Doctor < ApplicationRecord
     DOCTOR_MAXIMUM_AVAILABILITY.times.each do |i|
       date = DateTime.now.beginning_of_day + i.days
 
-      next if date.cwday == 7
+      next if date.cwday == SUNDAY
 
       start_timestamp = time_of_day(date, start_time)
       end_timestamp = time_of_day(date, end_time)
